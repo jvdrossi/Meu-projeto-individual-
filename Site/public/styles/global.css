@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border: 1px solid black;
+    width: 100%;
+    /* fazer uma linha de chegada no cabeçalho
+    background-image: url(../img/chegada.jpg); */
+}
+
+.header img {
+    height: 8rem;
+    width: 8rem;
+}
+
+.header div a {
+    font-size: 2rem;
+    text-decoration: none;
+    color: black;
+}
+
+.div_link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
