@@ -2,7 +2,7 @@
 Projeto Individual 2025/1 de ADS na SpTech School.
 
 ## Sobre o Projeto
-A correr com propósito nasceu de uma jornada pessoal de transformação através do esporte. Em 2022, o atletismo universitário se tornou mais do que uma atividade física na minha vida, foi simplesmente a virada de chave para superar desafios e abrir novas perspectivas. Inspirados por viver essa experiência, criei esse blog para compartilhar histórias, dicas e oportunidades, com o objetivo de oferecer a você(s) a mesma chance de crescimento e superação que encontrei na corrida. Junte-se a nós nesta jornada!
+A correr com propósito nasceu de uma jornada pessoal de transformação através do esporte. Em 2022, o atletismo universitário se tornou mais do que uma atividade física na minha vida, foi simplesmente a virada de chave para superar desafios e abrir novas perspectivas. Inspirados por viver essa experiência, criei esse site para compartilhar histórias, dicas e oportunidades, com o objetivo de oferecer a você(s) a mesma chance de crescimento e superação que encontrei na corrida. Junte-se a nós nesta jornada!
 
 ### Significado 
 A ideia de "Correr com Propósito" vai muito além da prática ou do trabalho com o esporte, mas sim fazer isso com um intuto maior, visando o próximo como um beneficiário do projeto, de forma com que todos os stackholders saiam ganhando ao final do dia.
