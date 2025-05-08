@@ -30,3 +30,89 @@
     width: 50%;
 }
 
+.div_link .home {
+    display: flex;
+
+}
+
+.div_link .historia {
+    display: flex;
+    padding-left: 1.5rem;
+    
+}
+
+.div_link .sobre_nos {
+    display: flex;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.div_link .cadastro {
+    display: flex;
+    padding-left: 4.0rem;
+}
+.div_link .login {
+    display: flex;
+    padding-left: 2.5rem;
+}
+
+/* Footer */
+.rodape {
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 2rem 0.5rem;
+    text-align: center;
+    height: 10rem;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    bottom: 0;
+    margin-top: 35rem;
+}
+
+.footer-menu {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.rodape a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logo-footer {
+    width: 6.25rem;
+    margin: 1rem 0;
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.social a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    align-self: flex-start;
+}
+
+.social a img {
+    width: 1.8rem;
+}
