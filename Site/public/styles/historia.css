@@ -1,0 +1,33 @@
+.section_minha_historia {
+    display: flex;
+    justify-content: center;
+    /* width: 100%; */
+    /* gap: 0.3rem; */
+    margin-top: 7rem;
+    background-color: blue;
+    font-size: 20px;
+    color: rgb(31, 31, 31);
+    font-family: "Racing Sans One", sans-serif;
+    font-weight: 400px;
+    font-style: normal;
+
+   
+}
+.div_minha_historia {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.div_h1_minha_historia {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.div_p1_minha_historia {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
