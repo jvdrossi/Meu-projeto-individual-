@@ -30,7 +30,7 @@
     font-family: "Racing Sans One", sans-serif;
     font-weight: 400px;
     font-style: normal;
-    padding-right: 0.8rem;
+    padding-right: 0.5rem;
 }
 
 
@@ -61,12 +61,14 @@
 #corrida_escura {
     width: 40rem;
     height: auto;
+    margin: 4rem;
 }
 
 .div_chamada_acao {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin: 4rem;
 }
 
 .div_h1 {
@@ -143,17 +145,5 @@
     height: 500px;
 }
 
-#id_img2 {
-    width: 100%;
-    height: 500px;
-}
 
-#id_img3 {
-    width: 100%;
-    height: 500px;
-}
 
-#id_img4 {
-    width: 100%;
-    height: 500px;
-}
