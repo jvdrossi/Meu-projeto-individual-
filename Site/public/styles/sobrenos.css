@@ -20,29 +20,26 @@
 
 .historia_johnny {
     display: flex;
-    padding-top: 10rem;
-    padding-bottom: 10rem;
+    padding: 10rem;
     justify-content: center;
     background-color: #0f1a35;
+    gap: 15rem;
 }
 
 .historia_johnny-img {
-    display: flex;
-    height: 35rem;
-    width: 20rem;
-    padding-left: 3rem;
-    padding-right: 15rem;
+    width: 60%;
 }
 
 .historia_johnny-textos{
+
     display: flex;
     flex-direction: column;
     width: 30rem;
     padding-bottom: 7rem;
     padding-top: 7rem;
     font-size: 0.8rem;
-    color: #FFFFFF;
-}
+    color: #FFFFFF; 
+} 
 
 .historia_johnny-h1{
     display: flex;
