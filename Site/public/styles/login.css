@@ -26,9 +26,12 @@ body{
 }
 
 .container h1{
-    font-size: 36px;
+    font-size: 34px;
     text-align: center;
     color: #006b8f;
+    font-family: "Racing Sans One", sans-serif;
+    font-style: normal;
+    text-shadow: 0px 0px 8px #ffffffbb;
 }
 
 .input_box {
@@ -93,7 +96,7 @@ input{
     font-size: 20px;
     text-align: center;
     margin: 20px 0 15px;
-    color: #9fcbe1;
+    color: #8cb8cc;
     color: rgb(31, 31, 31);
     font-family: "Racing Sans One", sans-serif;
     font-weight: 400px;
@@ -105,6 +108,11 @@ input{
     text-decoration: none;
     color: #8cb8cc;
     font-weight: 600;
+    color: rgb(31, 31, 31);
+    font-family: "Racing Sans One", sans-serif;
+    font-weight: 400px;
+    font-style: normal;
+    text-shadow: 0px 0px 8px #ffffffbb;
 }
 
 .register_link a:hover {
