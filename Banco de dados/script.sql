@@ -1,6 +1,6 @@
-CREATE DATABASE corrida;
+CREATE DATABASE correr_com_proposito;
 
-USE corrida;
+USE correr_com_proposito;
 
 CREATE TABLE corrida (
 idCorrida INT PRIMARY KEY AUTO_INCREMENT,
@@ -30,14 +30,17 @@ CREATE TABLE perguntas (
 idPergunta INT PRIMARY KEY AUTO_INCREMENT,
 pergunta VARCHAR(45),
 fkQuiz INT,
-fkResposta INT,
-CONSTRAINT fkPerguntaQuiz FOREIGN KEY (fkResposta)
+CONSTRAINT fkPerguntaQuiz FOREIGN KEY (fkQuiz)
 REFERENCES quiz (idQuiz));
 
 CREATE TABLE respostas (
 idResposta INT PRIMARY KEY AUTO_INCREMENT,
-respostaUsuario VARCHAR(45),
-respostaCerta VARCHAR(45));
+descricao VARCHAR(200),
+resposta TINYINT,
+fkPergunta int,
+CONSTRAINT fkRespostaPergunta FOREIGN KEY (fkPergunta)
+REFERENCES perguntas (idPergunta));
+
 
 CREATE TABLE resultado (
 dtResultado DATETIME,
@@ -52,4 +55,30 @@ REFERENCES usuario(idUsuario)
 
 
 -- FAZER OS JOIN
+
+-- Usuário e Corrida
+SELECT * FROM usuario
+JOIN corrida ON corrida.fkUsuario = usuario.idUsuario;
+
+SELECT u.nome,
+c.nome,
+c.dtCorrida,
+c.distancia,
+c.tempo
+FROM usuario AS u
+JOIN corrida as c ON c.fkUsuario = u.idUsuario;
+
+-- Usuário, Resultado e Quiz
+SELECT * FROM resultado
+JOIN usuario ON resultado.fkUsuario = usuario.idUsuario
+JOIN quiz ON resultado.fkQuiz = quiz.idQuiz;
+
+
+-- Quiz, Pergunta e Respostas
+SELECT * FROM quiz
+JOIN perguntas ON perguntas.fkQuiz = quiz.idQuiz
+JOIN respostas ON respostas.fkPergunta = perguntas.idPergunta;
+
+
+
 
