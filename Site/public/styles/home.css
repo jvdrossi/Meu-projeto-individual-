@@ -147,8 +147,24 @@
     height: 500px;
 }
 
+#id_img2 {
+    width: 800px;
+    height: 500px;
+}
+
 .paragrafo_depoimento{
     display: flex;
+    padding: 1.5rem;
+    padding-left: 8rem;
+    font-family: "Racing Sans One", sans-serif;
+    font-weight: 400px;
+    font-style: normal;
+    text-shadow: 0px 0px 8px #ffffffbb;
+}
+
+.paragrafo_depoimento2{
+    display: flex;
+    width: 33rem;
     padding: 1.5rem;
     padding-left: 8rem;
     font-family: "Racing Sans One", sans-serif;

@@ -75,6 +75,13 @@
     padding-top: 5rem;
 }
 
+.historia_johnny-p1{
+    display: flex;
+    font-size: 0.8rem;
+    padding-bottom: 2rem;
+    padding-top: 5rem;
+}
+
 .pilares_johnny_intro_pai{
     display: flex;
     justify-content: center;
@@ -84,8 +91,11 @@
 }
 
 .pilares_johnny_intro_h1{
+    display: flex;
+    text-align: center;
     font-size: 1.5rem;
     padding-bottom: 2rem;
+
 }
 
 .pilares_johnny_intro_p1{
@@ -93,6 +103,11 @@
     width: 45rem;
     font-size: 1rem;
     text-align: center;
+}
+
+.div_button_minha_historia{
+    display: flex;
+    margin-top: 2rem;
 }
 
 .pilares_meus {
