@@ -6,78 +6,65 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Dashboards</title>
+    <title>Dashboard</title>
 
-    
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
     <script src="../js/sessao.js"></script>
     <script src="./../js/alerta.js"></script>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- scripts do Chart.js - 2022-1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!--FONT AWESOME-->
     <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
 </head>
 
-<!-- <body onload=" atualizarFeed()"> -->
+<body onload="atualizarFeed()">
+    <div class="dashboard">
 
-<body>
+        <!-- Topo -->
+        <header class="top-bar">
+            <div class="logo">🏃 Rundoɹd</div>
+            <div class="date">20 de Maio</div>
+            <div class="profile">Johnny ⬇</div>
+        </header>
 
-    <div class="janela">
-        <div class="header-left">
-            <h1>AquaTech</h1>
+        <!-- Conteúdo Principal -->
+        <main class="content">
+            <!-- Painel Esquerdo -->
+            <section class="left-panel">
+                <h2>Corrida da Manhã</h2>
+                <div class="circle-stats">10cima</div>
+                <div class="stats">
+                    <p>Distância: <strong>15.3 km</strong></p>
+                    <p>Duração: <strong>1:24:37</strong></p>
+                    <p>Ritmo: <strong>5:25 min/km</strong></p>
+                </div>
+            </section>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+            <!-- Painel Mapa -->
+            <section class="map-panel">
+                <div class="map-placeholder">[ MAPA ]</div>
+                <div class="map-placeholder">[ MAPA ]</div>
+            </section>
 
-            <div class="btn-nav-white">
-                <a href="./cards.html">
-                    <h3>Aquários</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav">
-
-                <h3>Gráficos</h3>
-
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
-        </div>
-
-        <div class="dash">
-            <div id="alerta">
-            </div>
-
-            <div class="btns-dash" id="btnAquario">
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-            </div>
-            <div id="graficos">
-            </div>
-        </div>
+            <!-- Painel Direito / Feed -->
+            <section class="right-panel">
+                <h3>Feed</h3>
+                <ul>
+                    <li>✅ Atingiu 15k!</li>
+                    <li>🏆 1 do ranking nesta distancia!</li>
+                    <li>🏆 1 no pace geral !</li>
+                    <li>🔥 Total da semana: 33km</li>
+                </ul>
+                <button onclick="window.location='perfil.html'">Voltar ao perfil</button>
+            </section>
+        </main>
     </div>
-
-
 </body>
 
 </html>
+
 
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
