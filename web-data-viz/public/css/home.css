@@ -118,7 +118,7 @@
     button:hover{
         background-color: white;
         color: rgba(0, 0, 0, 0); /* Cor do texto transparente */
-        background-image: url(../img/chegada.jpg);
+        background-image: url(../assets/img/chegada.jpg);
         background-size: auto;
         font-weight: bold;
     }

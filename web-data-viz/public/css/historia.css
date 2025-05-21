@@ -1,18 +1,25 @@
+body {
+    overflow-x: hidden;
+}
+
+
+
 .section_minha_historia {
     display: flex;
     justify-content: center;
-    /* width: 100%; */
-    /* gap: 0.3rem; */
-    /* margin-top: 1rem; */
     font-size: 20px;
     color: rgb(31, 31, 31);
     font-family: "Racing Sans One", sans-serif;
-    font-weight: 400px;
+    font-weight: 400; /* Sem 'px' */
     font-style: normal;
-    height: 15rem;
-   padding-bottom: 12rem;
-   padding-top: 15.2rem;
+    height: 15rem; /* Altura fixa, avalie se é o ideal */
+    padding-top: 5.2rem;
+    padding-bottom: 6rem;
+    /* width: 100%; */ /* Comente se não for usar */
+    /* gap: 0.3rem; */ /* Comente se não for usar */
+    /* margin-top: 1rem; */ /* Comente se não for usar */
 }
+
 .div_minha_historia {
     display: flex;
     flex-direction: row;
@@ -20,8 +27,8 @@
     align-items: center;
     align-self: center;
     width: 20rem;
-    height: 1000px;
-    z-index: -1;
+    height: 1000px; /* Parece muito grande, considere reduzir */
+    z-index: -1; /* Cuidado com z-index negativo, pode esconder o elemento */
 }
 
 .div_p1_minha_historia {
@@ -35,44 +42,46 @@
     gap: 1.5rem;
 }
 
-
-.div_button_minha_historia button{
+.div_button_minha_historia button {
     border-radius: 3px;
     width: 6rem;
     height: 2rem;
     background-color: black;
     color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .historia_johnny {
     display: flex;
-    padding: 10rem;
+    padding: 6rem 2rem;
     justify-content: center;
     background-color: #0f1a35;
-    gap: 15rem;
+    gap: 5rem;
+    flex-wrap: wrap;
+    /* max-width: 800px;          */
+    margin: 0 auto;
 }
 
 .historia_johnny-img {
-    width: 50%;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 .historia_johnny-textos{
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
-    width: 20rem;
-    /* padding-top: 5rem;
-    padding-bottom: 5rem; */
-    font-size: 0.8rem;
-    /* gap: 3rem; */
-    color: #FFFFFF;
+    max-width: 500px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    padding-top: 2rem;
 }
 
 .historia_johnny-h1{
-    display: flex;
     font-size: 2rem;
-    padding-bottom: 2rem;
-    padding-top: 5rem;
+    padding-bottom: 1.5rem;
 }
 
 .historia_johnny-p1{
@@ -82,46 +91,54 @@
     padding-top: 5rem;
 }
 
-.pilares_johnny_intro_pai{
+.pilares_johnny_intro_pai {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding-top: 5rem;
+    width: 100%;
+    padding: 8rem 2rem;
+    font-size: 1.2rem;
+    gap: 1.5rem;
+    text-align: center;
+    color: rgb(31, 31, 31);
+    font-family: "Racing Sans One", sans-serif;
 }
 
-.pilares_johnny_intro_h1{
-    display: flex;
-    text-align: center;
+.pilares_johnny_intro_h1 {
     font-size: 1.5rem;
     padding-bottom: 2rem;
-
-}
-
-.pilares_johnny_intro_p1{
-    display: flex;
-    width: 45rem;
-    font-size: 1rem;
+    width: 100%;
+    max-width: 600px;
     text-align: center;
+    margin: 0 auto; /* centraliza no container */
 }
 
-.div_button_minha_historia{
+.pilares_johnny_intro_p1 {
+    font-size: 1rem;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.div_button_minha_historia {
     display: flex;
+    justify-content: center; /* centraliza botão */
     margin-top: 2rem;
+    width: 100%;
 }
 
 .pilares_meus {
     width: 100%;
-    height: 100vh;
     padding: 0 5%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding-top: 10rem;
 }
 
 .titulo {
-    height: 15%;
+    min-height: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,32 +152,30 @@
 }
 
 .imagens {
-    height: 100vh;
-    width: auto;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 4%;
     padding-top: 4rem;
+    flex-wrap: wrap; /* 🔥 Adiciona quebra em telas menores */
 }
 
 .pilar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    font-size: 1rem;
-    width: 80%;
+    width: 30%; /* 🔥 Divide os pilares igualmente */
     padding-top: 1rem;
     overflow: hidden;
-    text-align: justify;
     line-height: 1.5;
+    text-align: justify;
 }
 
 .pilar img {
     width: 70%;
-    max-height: 40%;
-    /* border-radius: 10px; */
+    max-height: 250px; /* 🔥 Limita a altura da imagem */
+    object-fit: cover;
     padding-top: 2rem;
 }
 
@@ -168,16 +183,132 @@
     font-size: 20px;
     font-weight: bold;
     color: black;
-    padding-top: 4rem;
+    padding-top: 2rem;
 }
 
 .pilar p {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: black;
-    padding-top: 4px;
-    overflow: hidden;
+    padding-top: 1rem;
     width: 100%;
-    padding-top: 2rem;
-    text-align: justify;
 }
 
+/* HEADER */
+
+*{
+    margin: 0;
+    padding: 0;    
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.header img {
+    height: 8rem;
+    width: 8rem;
+}
+
+.header div a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: black;
+}
+
+.div_link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+.div_link .home {
+    display: flex;
+
+}
+
+.div_link .historia {
+    display: flex;
+    padding-left: 1.5rem;
+    
+}
+
+.div_link .sobre_nos {
+    display: flex;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.div_link .cadastro {
+    display: flex;
+    padding-left: 4.0rem;
+}
+.div_link .login {
+    display: flex;
+    padding-left: 2.5rem;
+}
+
+
+
+/* Footer */
+.rodape {
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 2rem 0.5rem;
+    text-align: center;
+    height: 10rem;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5rem;
+}
+
+.footer-menu {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.rodape a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logo-footer {
+    width: 6.25rem;
+    margin: 1rem 0;
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.social a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    align-self: flex-start;
+}
+
+.social a img {
+    width: 1.8rem;
+}

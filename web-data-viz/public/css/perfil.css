@@ -1,3 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
 .cadastro-recinto{
     display: flex;
     justify-content: center;
@@ -5,16 +17,13 @@
     color: #FEFFFB;
     padding: 2rem;
     width: 55%;
-
     border-radius: 4px;
 }
 
 input{
-background-color: white;
-border-radius: 3px;
-
+    background-color: white;
+    border-radius: 3px;
 }
-/* #5E8C61 */
 
 #cadastro-recinto-button{
     background-color: #FFFFFF;
@@ -22,6 +31,8 @@ border-radius: 3px;
     border-radius: 3px;
     width: 11rem;
     align-self: center;
+    padding: 0.15rem; 
+    margin-top: 20px;
 }
 
 .cadastro-recinto-input{
@@ -44,27 +55,13 @@ border-radius: 3px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     padding: 2rem;
     padding-left: 16rem;
-}
-
-.cadastro-recinto-img{
-    align-self: flex-start;
-}
-
-.cadastro-recinto-img img{
-    position: absolute;
-    width: 12rem;
-    padding-right: 6rem;
-
-    left: 40%;
-
 }
 
 .div_campos{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;   
+    align-items: center;  
 }

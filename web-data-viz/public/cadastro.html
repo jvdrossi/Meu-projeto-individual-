@@ -11,8 +11,8 @@
 
     <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/cadastro.css">
-    
-    
+
+
     <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -30,44 +30,97 @@
         </div>
     </Header> -->
     <!-- FINAL DO HEADER -->
-        <main class="container">
-            <form>
-                <h1>Ainda nao sabe seu pace ? Junte-se a nós!</h1>
-                
-                <div class="input_box">
-                    <input placeholder="Nome" type="email">
-                    <!-- <i class="bx bxs-user"></i> -->
-                </div>
-                <div class="input_box">
-                    <input placeholder="Gênero" type="">
-                    <!-- <i class="bx bxs-user"></i> -->
-                </div>
-                <select id="genero">
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                  </select>
-                <div class="input_box">
-                    <input placeholder="Data de Nascimento" type="date">
-                    <!-- <i class="bx bxs-user"></i> -->
-                </div>
-                <div class="input_box">
-                    <input placeholder="Email" type="email">
-                    <!-- <i class="bx bxs-user"></i> -->
-                </div>
-                <div class="input_box">
-                    <input placeholder="Senha" type="password">
-                    <!-- <i class="bx bxs-lock-alt"></i> -->
-                </div>
+    <main class="container">
+        <form>
+            <h1>Ainda nao sabe seu pace ? Junte-se a nós!</h1>
 
-                <button type="submit" class="login">Cadastrar</button>
+            <div class="input_box">
+                <input id="nome_input" placeholder="Nome" type="text">
+                <!-- <i class="bx bxs-user"></i> -->
+            </div>
+            <select id="genero_input">
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+            </select>
+            <div class="input_box">
+                <input id="data_input" placeholder="Data de Nascimento" type="date">
+                <!-- <i class="bx bxs-user"></i> -->
+            </div>
+            <div class="input_box">
+                <input id="email_input" placeholder="Email" type="email">
+                <!-- <i class="bx bxs-user"></i> -->
+            </div>
+            <div class="input_box">
+                <input id="senha_input" placeholder="Senha" type="password">
+                <!-- <i class="bx bxs-lock-alt"></i> -->
+            </div>
 
-                <div class="register_link">
-                    <p>Já tem uma conta? <a href="./login.html"> Faça o login</a></p>
-                </div>
-                <div class="register_link">
-                    <p>Voltar para<a href="./index.html"> Home</a></p>
-                </div>
-            </form>
-        </main>
+            <button type="submit" class="login" onclick="cadastrar()">Cadastrar</button>
+
+            <div class="register_link">
+                <p>Já tem uma conta? <a href="./login.html"> Faça o login</a></p>
+            </div>
+            <div class="register_link">
+                <p>Voltar para<a href="./index.html"> Home</a></p>
+            </div>
+        </form>
+    </main>
 </body>
+
 </html>
+
+<script>
+    // Array para armazenar empresas cadastradas para validação de código de ativação 
+    let listaEmpresasCadastradas = [];
+
+    function cadastrar() {
+        // aguardar();
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var nomeVar = nome_input.value;
+        // var generoVar = genero_input.value;
+         // var dataVar = data_input.value;
+        var emailVar = email_input.value;
+        var senhaVar = senhor_input.value;
+       
+        
+        // var idEmpresaVincular
+
+        // Verificando se há algum campo em branco
+        if (
+            nomeVar == "" ||
+             //   generoVar == "" ||
+            //   dataVar == "" ||
+            emailVar == "" ||
+            senhaVar == ""
+           
+        ) alert("Erro")
+        else {
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+
+                    nomeServer: nomeVar,
+                    // generoServer: generoVar,
+                    // dataServer: dataVar,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar,
+                }),
+            }).then(function (resposta) {
+                    console.log("resposta: ", resposta);
+                    if (resposta.ok) {
+                        setTimeout(() => {
+                            window.location = "login.html";
+                        }, "2000");
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+        }
+    }
+
+</script>

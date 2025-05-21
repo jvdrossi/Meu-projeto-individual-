@@ -1,151 +1,255 @@
-*{
-    margin: 0;
-    padding: 0;
 
+
+body {
+    overflow-x: hidden;
 }
-
+/* Intro */
 .div_p1_minha_historia {
     display: flex;
-  flex-direction: column;       /* Coloca os textos um em cima do outro */
-  justify-content: center;      /* Centraliza no eixo vertical (se o container tiver altura definida) */
-  align-items: center;          /* Centraliza no eixo horizontal */
-  width: 100%;
-
-  padding-top: 20.85rem;
-  padding-bottom: 20.85rem;
-  font-size: 1.2rem;
-  gap: 1.5rem;                  /* Espaçamento entre os textos */
-  text-align: center;
-  color: rgb(31, 31, 31);
-  font-family: "Racing Sans One", sans-serif;
-  font-style: normal;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 8rem 2rem;
+    font-size: 1.2rem;
+    gap: 1.5rem;
+    text-align: center;
+    color: rgb(31, 31, 31);
+    font-family: "Racing Sans One", sans-serif;
 }
 
-.texto_sobrenos{
-    width: 25rem;
+.texto_sobrenos {
+    max-width: 600px;
 }
 
+/* --------------------------- */
+/* Minha História */
 .historia_johnny {
     display: flex;
-    padding: 10rem;
+    padding: 6rem 2rem;
     justify-content: center;
     background-color: #0f1a35;
-    gap: 15rem;
+    gap: 5rem;
+    flex-wrap: wrap;
 }
 
 .historia_johnny-img {
-    width: 60%;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
-.historia_johnny-textos{
-
+.historia_johnny-textos {
     display: flex;
     flex-direction: column;
-    width: 30rem;
-    padding-bottom: 7rem;
-    padding-top: 7rem;
-    font-size: 0.8rem;
-    color: #FFFFFF; 
-} 
-
-.historia_johnny-h1{
-    display: flex;
-    font-size: 2rem;
-    padding-bottom: 2rem;
-    padding-top: 5rem;
+    max-width: 500px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    padding-top: 2rem;
 }
 
+.historia_johnny-h1 {
+    font-size: 2rem;
+    padding-bottom: 1.5rem;
+}
 
+/* --------------------------- */
+/* Pilares */
 .pilares_meus {
     width: 100%;
-    height: 100vh;
-    padding: 0 5%;
-    box-sizing: border-box;
+    padding: 6rem 5%;
     display: flex;
     flex-direction: column;
-    padding-top: 8rem;
-}
-
-.titulo {
-    height: 15%;
-    display: flex;
     justify-content: center;
     align-items: center;
-    color: black;
-    text-align: center;
-}
-
-.titulo h2 {
-    font-size: 36px;
-    font-weight: 500;
+    gap: 3rem;
 }
 
 .imagens {
-    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 1%;
+    gap: 2rem;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .pilar {
-    width: 32%;
+   
+    min-width: 250px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
-.pilar img {
-    width: 40%;
-    max-height: 25%;
-    /* border-radius: 10px; */
-    padding-top: 2rem;
-}
-
 .pilar h3 {
-    font-size: 35px;
+    font-size: 1.8rem; /* Reduzido de 35px (~2.2rem) para 1.8rem */
     font-weight: bold;
     color: black;
-    padding-top: 2rem;
+    padding-top: 1.5rem;
 }
 
 .pilar p {
-    font-size: 1rem;
+    font-size: 0.95rem; /* Reduzido de 1rem para 0.95rem */
     color: black;
-    width: 80%;
-    padding-top: 4rem;
-    overflow: hidden;
+    width: 90%; /* Deixa um pouco mais largo para melhor leitura */
+    padding-top: 2.5rem;
     text-align: justify;
     line-height: 1.5;
 }
 
-.carrossel{
+/* --------------------------- */
+/* Carrossel */
+.carrossel {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    flex-direction: column;
-    height: auto;
-    position: relative;
-    top: 80%;
-    z-index: 2;
+    padding: 3rem 1rem;
     background: transparent;
-  }
-  
-  .fotos {
-    display: flex;          /* Garante que as imagens fiquem lado a lado */
+}
+
+.fotos {
+    display: flex;
     justify-content: center;
-    gap: 2.5rem;
-    max-width: 600px;
-    margin: 2rem auto 0 auto;
-  }
-  
-  .fotos img {
-    margin-top: 7rem;
-    width: 100%;             /* Reduz o tamanho das imagens */
-    height: auto;
+    gap: 2rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.fotos img {
+    width: 350px;
+    height: 350px;
     object-fit: cover;
-    border-radius: 6px;
-  }
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+.fotos img:hover {
+    transform: scale(1.05);
+}
+
+
+/* HEADER */
+
+*{
+    margin: 0;
+    padding: 0;    
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.header img {
+    height: 8rem;
+    width: 8rem;
+}
+
+.header div a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: black;
+}
+
+.div_link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+.div_link .home {
+    display: flex;
+
+}
+
+.div_link .historia {
+    display: flex;
+    padding-left: 1.5rem;
+    
+}
+
+.div_link .sobre_nos {
+    display: flex;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.div_link .cadastro {
+    display: flex;
+    padding-left: 4.0rem;
+}
+.div_link .login {
+    display: flex;
+    padding-left: 2.5rem;
+}
+
+
+
+/* Footer */
+.rodape {
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 2rem 0.5rem;
+    text-align: center;
+    height: 10rem;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    bottom: 0;
+    margin-top: 5rem;
+}
+
+.footer-menu {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.rodape a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logo-footer {
+    width: 6.25rem;
+    margin: 1rem 0;
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.social a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    align-self: flex-start;
+}
+
+.social a img {
+    width: 1.8rem;
+}
