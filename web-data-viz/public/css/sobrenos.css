@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-    
+
 }
 
 .div_p1_minha_historia {
@@ -10,6 +10,7 @@
   justify-content: center;      /* Centraliza no eixo vertical (se o container tiver altura definida) */
   align-items: center;          /* Centraliza no eixo horizontal */
   width: 100%;
+
   padding-top: 20.85rem;
   padding-bottom: 20.85rem;
   font-size: 1.2rem;
@@ -119,7 +120,7 @@
     line-height: 1.5;
 }
 
-.carrossel {
+.carrossel{
     display: flex;
     justify-content: center;
     align-items: center;

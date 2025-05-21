@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../assets/img/logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Recintos</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/perfil.css">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header class="principal-barra-lateral">
+        <section>
+            <div class="barra-lateral-perfil">
+                <img src="./assets/img/cronometro.png" alt="Foto de Perfil da Dashboard">
+                <h1>Johnny</h1>
+            </div>
+
+            <!-- Navegação do usuário-->
+            <div class="barra-lateral-navegacao">
+                <a href="./quiz.html">
+                    <img src="./assets/img/dashboard1.png" alt="Icon Visão Geral">
+                    Quiz
+                </a>
+                <a href="./dashboard/dashboard.html">
+                    <img class="barra-lateral-navegacao-img" src="./assets/img/dashboard1.png" alt="Icon Visão Geral">
+                    Dashboard
+                </a>
+                <a href="./index.html">
+                    <img src="./assets/img/icon-sair.svg" id="icon-sair">
+                    Sair
+                </a>
+            </div>
+        </section>
+    </header>
+
+    <!-- Parte principal do site -->
+    <main class="principal">
+        <div class="cadastro-recinto-h1">
+            <h1>Pace Calculator</h1>
+        </div>
+
+        <section class="cadastro-recinto">
+
+            <div class="cadastro-recinto-img">
+                <img src="../assets/imgs/recinto.png" alt="">
+            </div>
+
+            <div class="div_campos">
+                <div class="cadastro-recinto-input">
+                    Insira o nome da prova:
+                    <input type="text" id="input_nomeCadastro">
+                </div>
+                <div class="cadastro-recinto-input">
+                    Insira a data da prova:
+                    <input type="text" id="input_n1Cadastro">
+                </div>
+                <div class="cadastro-recinto-input">
+                    Insira a distancia:
+                    <input type="text" id="input_n2Cadastro">
+                </div>
+                <div class="cadastro-recinto-input">
+                    Insira o tempo:
+                    <input type="text" id="input_fkPrateleira">
+                </div>
+                <button id="cadastro-recinto-button" onclick="cadastrar()">Calcular</button>
+
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer início -->
+    <footer class="rodape">
+        <div class="footer-menu">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./historia.html">Historia</a></li>
+                <li><a href="./sobrenos.html">Sobre nós</a></li>
+            </ul>
+        </div>
+        <div class="div_endereco">
+            <img src="./assets/img/logo_branco.png" alt="Correr com Propósito logo" class="logo-footer" />
+        </div>
+        <div class="social">
+            <a href="#"><img src="./assets/img/icone-whatsapp.png" alt="imagem Facebook">Whatsapp</a>
+            <a href="#"><img src="./assets/img/icone-linkedin.png" alt="imagem LinkedIn">LinkedIn</a>
+            <a href="#"><img src="./assets/img/icone-instagram.png" alt="imagem Instagram">Instagram</a>
+        </div>
+    </footer>
+    <!-- Footer fim -->
+
+    <script src="../js/dashboard/dashboard-cadastro-recinto.js"></script>
+</body>
+
+</html>

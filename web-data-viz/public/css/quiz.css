@@ -1,0 +1,261 @@
+/* --- Importações e reset básicos --- */
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
+
+body {
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+    margin: 0;
+    background-color: #1e1e2f;
+    color: #333333;
+    font-family: "Gochi Hand", cursive;
+    line-height: 1.6;
+}
+
+/* --- Estilos da Navbar (Idênticos ao seu style.css de login) --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1e1e2f;
+    z-index: 1000;
+    padding: 10px 0;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+
+.botao_voltar a {
+    text-decoration: none; 
+
+}
+
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background-color: #FFFFFF; /* Fundo branco para o container do quiz */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#pontuacao,
+#jogo {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#pontuacaoDuranteJogo span,
+#pontuacaoFinalJogo span {
+    width: 100%;
+    text-align: left;
+    color: #1e1e2f;
+}
+
+.border-primary, .border-secondary {
+    border: 1px solid #F3C6DF;
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.botao_entrar {
+    background-color: #f97316;
+    color: black; 
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: "Gochi Hand", cursive;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.botao_entrar:hover {
+    background-color: #12121c;
+    color: white; 
+}
+
+
+.botao_apagar {
+    background-color: #12121c;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: "Gochi Hand", cursive;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.botao_apagar:hover {
+    background-color: #f97316;
+    color: #12121c;
+}
+
+#btnIniciarQuiz {
+    width: auto;
+    align-self: center;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+
+}
+
+#infoQuestao,
+#perguntaDaQuestaoAtual,
+#infoAlternativas {
+    margin-bottom: 15px;
+    color: #12121c;
+}
+
+#perguntaDaQuestaoAtual {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+    color: #12121c;
+}
+
+#infoAlternativas {
+    font-style: italic;
+    font-size: 1em;
+    color: #12121c;
+}
+
+#opcoes {
+    gap: 12px;
+    width: 100%;
+}
+
+.radio-option {
+    margin-right: 8px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.option-label {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: inline-block;
+    width: calc(100% - 30px);
+    vertical-align: middle;
+    border: 1px solid #F3C6DF;
+    color: #12121c;
+    background-color: #FFFFFF;
+}
+
+.option-label:hover {
+    background-color: #ffe6f5;
+}
+
+#botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#botoes button {
+    width: 100%;
+}
+
+.text-success-with-bg {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.text-danger-with-bg {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.text-warning-with-bg {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.final-message {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    #pontuacao,
+    #jogo {
+        padding: 15px;
+    }
+
+    #botoes button {
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    #btnIniciarQuiz {
+        font-size: 1em;
+        padding: 12px 25px;
+    }
+
+    #perguntaDaQuestaoAtual {
+        font-size: 1em;
+    }
+
+    .option-label {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+}
