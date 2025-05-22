@@ -11,12 +11,12 @@ tempo TIME,
 fkUsuario INT,
 CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario)
-);
+); 
 
 CREATE TABLE usuario (
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
-gênero VARCHAR(45),
+genero VARCHAR(45),
 dtNasc DATE,
 email VARCHAR(45) UNIQUE,
 senha VARCHAR(45));
@@ -31,7 +31,7 @@ idPergunta INT PRIMARY KEY AUTO_INCREMENT,
 pergunta VARCHAR(45),
 fkQuiz INT,
 CONSTRAINT fkPerguntaQuiz FOREIGN KEY (fkQuiz)
-REFERENCES quiz (idQuiz));
+REFERENCES quiz (idQuiz)); 
 
 CREATE TABLE respostas (
 idResposta INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,7 +39,7 @@ descricao VARCHAR(200),
 resposta TINYINT,
 fkPergunta int,
 CONSTRAINT fkRespostaPergunta FOREIGN KEY (fkPergunta)
-REFERENCES perguntas (idPergunta));
+REFERENCES perguntas (idPergunta)); 
 
 
 CREATE TABLE resultado (
@@ -50,10 +50,11 @@ CONSTRAINT pkComposta PRIMARY KEY (fkQuiz, fkUsuario),
 CONSTRAINT fkResultadoQuiz FOREIGN KEY (fkQuiz)
 REFERENCES quiz(idQuiz),
 CONSTRAINT fkResultadoUsuario FOREIGN KEY (fkUsuario)
-REFERENCES usuario(idUsuario)
-);
+REFERENCES usuario(idUsuario) 
+); 
 
 
+select * from usuario;
 -- FAZER OS JOIN
 
 -- Usuário e Corrida

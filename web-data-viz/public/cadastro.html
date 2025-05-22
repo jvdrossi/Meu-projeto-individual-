@@ -36,7 +36,6 @@
 
             <div class="input_box">
                 <input id="nome_input" placeholder="Nome" type="text">
-                <!-- <i class="bx bxs-user"></i> -->
             </div>
             <select id="genero_input">
                 <option value="masculino">Masculino</option>
@@ -44,15 +43,12 @@
             </select>
             <div class="input_box">
                 <input id="data_input" placeholder="Data de Nascimento" type="date">
-                <!-- <i class="bx bxs-user"></i> -->
             </div>
             <div class="input_box">
                 <input id="email_input" placeholder="Email" type="email">
-                <!-- <i class="bx bxs-user"></i> -->
             </div>
             <div class="input_box">
                 <input id="senha_input" placeholder="Senha" type="password">
-                <!-- <i class="bx bxs-lock-alt"></i> -->
             </div>
 
             <button type="submit" class="login" onclick="cadastrar()">Cadastrar</button>
@@ -79,10 +75,10 @@
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
         var nomeVar = nome_input.value;
-        // var generoVar = genero_input.value;
+        var generoVar = genero_input.value;
          // var dataVar = data_input.value;
         var emailVar = email_input.value;
-        var senhaVar = senhor_input.value;
+        var senhaVar = senha_input.value;
        
         
         // var idEmpresaVincular
@@ -90,7 +86,7 @@
         // Verificando se há algum campo em branco
         if (
             nomeVar == "" ||
-             //   generoVar == "" ||
+            generoVar == "" ||
             //   dataVar == "" ||
             emailVar == "" ||
             senhaVar == ""
@@ -105,7 +101,7 @@
                 body: JSON.stringify({
 
                     nomeServer: nomeVar,
-                    // generoServer: generoVar,
+                    generoServer: generoVar,
                     // dataServer: dataVar,
                     emailServer: emailVar,
                     senhaServer: senhaVar,
