@@ -76,7 +76,7 @@
         // Agora vá para o método fetch logo abaixo
         var nomeVar = nome_input.value;
         var generoVar = genero_input.value;
-         // var dataVar = data_input.value;
+        var dataVar = data_input.value;
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
        
@@ -87,7 +87,7 @@
         if (
             nomeVar == "" ||
             generoVar == "" ||
-            //   dataVar == "" ||
+            dataVar == "" ||
             emailVar == "" ||
             senhaVar == ""
            
@@ -102,7 +102,7 @@
 
                     nomeServer: nomeVar,
                     generoServer: generoVar,
-                    // dataServer: dataVar,
+                    dataServer: dataVar,
                     emailServer: emailVar,
                     senhaServer: senhaVar,
                 }),

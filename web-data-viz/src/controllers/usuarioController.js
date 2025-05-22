@@ -55,7 +55,7 @@ function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
     var genero = req.body.generoServer;
-    var data = req.body.dataServer;
+    var dtNasc = req.body.dataServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
@@ -69,7 +69,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, genero, data, email, senha)
+        usuarioModel.cadastrar(nome, genero, dtNasc, email, senha)
             .then(
                 function (resultado) {
                     res.json(resultado);

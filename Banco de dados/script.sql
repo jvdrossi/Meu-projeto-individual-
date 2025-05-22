@@ -55,6 +55,8 @@ REFERENCES usuario(idUsuario)
 
 
 select * from usuario;
+
+
 -- FAZER OS JOIN
 
 -- Usuário e Corrida
