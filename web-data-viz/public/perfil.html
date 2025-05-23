@@ -39,41 +39,93 @@
 
     <!-- Parte principal do site -->
     <main class="principal">
-        <div class="cadastro-recinto-h1">
+        <div class="perfil-h1">
             <h1>Pace Calculator</h1>
         </div>
 
-        <section class="cadastro-recinto">
+        <section class="perfil">
 
-            <div class="cadastro-recinto-img">
+            <!-- <div class="perfil-img">
                 <img src="../assets/imgs/recinto.png" alt="">
-            </div>
+            </div> -->
 
             <div class="div_campos">
-                <div class="cadastro-recinto-input">
+                <div class="perfil-input">
                     Insira o nome da prova:
-                    <input type="text" id="input_nomeCadastro">
+                    <input type="text" id="input_nome_perfil">
                 </div>
-                <div class="cadastro-recinto-input">
+                <div class="perfil-input">
                     Insira a data da prova:
-                    <input type="text" id="input_n1Cadastro">
+                    <input type="date" id="input_data_perfil">
                 </div>
-                <div class="cadastro-recinto-input">
+                <div class="perfil-input">
                     Insira a distancia:
-                    <input type="text" id="input_n2Cadastro">
+                    <input type="text" id="input_distancia_perfil">
                 </div>
-                <div class="cadastro-recinto-input">
+                <div class="perfil-input">
                     Insira o tempo:
-                    <input type="text" id="input_fkPrateleira">
+                    <input type="time" id="input_tempo_perfil" name="tempo" step="1">
                 </div>
-                <button id="cadastro-recinto-button" onclick="cadastrar()">Calcular</button>
+                <button id="perfil-button" onclick="calcular()">Calcular</button>
 
             </div>
 
         </section>
     </main>
-
-    <script src="../js/dashboard/dashboard-cadastro-recinto.js"></script>
 </body>
 
 </html>
+
+
+<script>
+
+
+    function calcular() {
+        // aguardar();
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var nome_perfilVar = input_nome_perfil.value;
+        var data_perfilVar = input_data_perfil.value;
+        var distancia_perfilVar = input_distancia_perfil.value;
+        var tempo_perfilVar = input_tempo_perfil.value;
+       
+        
+        // var idEmpresaVincular
+
+        // Verificando se há algum campo em branco
+        if (
+            
+            nome_perfilVar == "" ||
+            data_perfilVar == "" ||
+            distancia_perfilVar == "" ||
+            tempo_perfilVar == ""
+           
+        ) alert("Erro")
+        else {
+            fetch("/Calculadora/calcular", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idUsuarioServer: sessionStorage.ID_USUARIO,
+                    nome_perfilServer: nome_perfilVar,
+                    data_perfilServer: data_perfilVar,
+                    distancia_perfilServer: distancia_perfilVar,
+                    tempo_perfilServer: tempo_perfilVar,
+                }),
+            }).then(function (resposta) {
+                    console.log("resposta: ", resposta);
+                    if (resposta.ok) {
+                        setTimeout(() => {
+                            window.location = "login.html";
+                        }, "2000");
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+        }
+    }
+
+</script>
