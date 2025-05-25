@@ -134,7 +134,7 @@
 }
 
 .div_card_depoimento {
-    width: 90%;
+    width: 65%;
     display: flex;
     flex-direction: row;
     /* background: url(../img/perfil\ mack.jpg); */
@@ -143,12 +143,12 @@
 }
 
 #id_img1 {
-    width: 52.5%;
+    width: 400px;
     height: 500px;
 }
 
 #id_img2 {
-    width: 800px;
+    width: 500px;
     height: 500px;
 }
 
