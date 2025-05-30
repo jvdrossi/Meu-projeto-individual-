@@ -31,12 +31,12 @@
         <main class="content">
             <!-- Painel Esquerdo -->
             <section class="left-panel">
-                <h2>Corrida da Manhã</h2>
-                <div class="circle-stats">10cima</div>
+                <h2 id="nome_da_Corrida">Corrida da Manhã</h2>
+                <div class="circle-stats" id="totalCorridas">10cima</div>
                 <div class="stats">
-                    <p>Distância: <strong>15.3 km</strong></p>
-                    <p>Duração: <strong>1:24:37</strong></p>
-                    <p>Ritmo: <strong>5:25 min/km</strong></p>
+                    <p>Distância: <strong id="ultimaDistancia">15.3 km</strong></p>
+                    <p>Duração: <strong id="ultimoTempo">1:24:37</strong></p>
+                    <p>Ritmo: <strong id="pace">5:25 min/km</strong></p>
                 </div>
             </section>
 
@@ -55,7 +55,7 @@
                     <li>🏃 [1 no pace geral !]</li>
                     <li>🔥 Total da semana: 33km</li>
                     <li>🔥 [Top 3 do Quiz]</li>
-                </ul>
+                    </ul>
                 <button onclick="window.location='../perfil.html'">Voltar ao perfil</button>
             </section>
         </main>
@@ -70,19 +70,19 @@
 
     let proximaAtualizacao;
 
-    window.onload = exibirAquariosDoUsuario();
+    window.onload = exibirCorridaDoUsuario();
 
-    function exibirAquariosDoUsuario() {
-        var aquarios = JSON.parse(sessionStorage.AQUARIOS);
-        aquarios.forEach(item => {
-            document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
+    function exibirCorridaDoUsuario() {
+        var corridas = JSON.parse(sessionStorage.Ultima_corrida);
+        corridas.forEach(item => {
+            document.getElementById("btnCorridas").innerHTML += `
+            <button class="btn-chart" onclick="exibirCorrida(${item.id})" id="btnCorridas${item.id}">${item.descricao}</button>
             `
 
             document.getElementById("graficos").innerHTML += `
                 <div id="grafico${item.id}" class="display-none">
                     <h3 class="tituloGraficos">
-                        <span id="tituloAquario${item.id}">${item.descricao}</span>
+                        <span id="tituloCorridas${item.id}">${item.descricao}</span>
                     </h3>
                     <div class="graph">
                         <canvas id="myChartCanvas${item.id}"></canvas>
@@ -96,23 +96,23 @@
             obterDadosGrafico(item.id)
         });
 
-        if (aquarios.length > 0) {
-            exibirAquario(aquarios[0].id)
+        if (corridas.length > 0) {
+            exibirCorrida(corridas[0].id)
         }
     }
 
-    function alterarTitulo(idAquario) {
-        var tituloAquario = document.getElementById(`tituloAquario${idAquario}`)
-        var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
-        tituloAquario.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
+    function alterarTitulo(idCorrida) {
+        var tituloCorridas = document.getElementById(`tituloCorridas${idCorrida}`)
+        var descricao = JSON.parse(sessionStorage.Ultima_corrida).find(item => item.id == idCorrida).descricao;
+        tituloCorridas.innerHTML = "Últimas provas de corrida do <span style='color: #e6005a'>" + descricao + "</span>"
     }
 
-    function exibirAquario(idAquario) {
-        let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
+    function exibirCorrida(idCorrida) {
+        let todosOsGraficos = JSON.parse(sessionStorage.Ultima_corrida);
 
         for (i = 0; i < todosOsGraficos.length; i++) {
             // exibindo - ou não - o gráfico
-            if (todosOsGraficos[i].id != idAquario) {
+            if (todosOsGraficos[i].id != idCorrida) {
                 let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
                 if (elementoAtual.classList.contains("display-block")) {
                     elementoAtual.classList.remove("display-block")
@@ -120,7 +120,7 @@
                 elementoAtual.classList.add("display-none")
 
                 // alterando estilo do botão
-                let btnAtual = document.getElementById(`btnAquario${todosOsGraficos[i].id}`)
+                let btnAtual = document.getElementById(`btnCorridas${todosOsGraficos[i].id}`)
                 if (btnAtual.classList.contains("btn-pink")) {
                     btnAtual.classList.remove("btn-pink")
                 }
@@ -129,12 +129,12 @@
         }
 
         // exibindo - ou não - o gráfico
-        let graficoExibir = document.getElementById(`grafico${idAquario}`)
+        let graficoExibir = document.getElementById(`grafico${idCorrida}`)
         graficoExibir.classList.remove("display-none")
         graficoExibir.classList.add("display-block")
 
         // alterando estilo do botão
-        let btnExibir = document.getElementById(`btnAquario${idAquario}`)
+        let btnExibir = document.getElementById(`btnCorridas${idCorrida}`)
         btnExibir.classList.remove("btn-white")
         btnExibir.classList.add("btn-pink")
     }
@@ -150,36 +150,29 @@
 
     //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
     //     Para ajustar o "select", ajuste o comando sql em src/models
-    function obterDadosGrafico(idAquario) {
+    function obterDadosGrafico(idCorrida) {
 
-        alterarTitulo(idAquario)
+        alterarTitulo(idCorrida)
 
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);
         }
 
-        fetch(`/medidas/ultimas/${idAquario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-
-                    plotarGrafico(resposta, idAquario);
-
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        fetch(`/corrida/usuario/${idUsuario}`)
+            .then(res => res.json())
+            .then(corridas => {
+                sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
+                // redireciona para a página da dashboard ou inicializa os gráficos
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar corridas do usuário", erro);
             });
     }
 
     // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
     // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
     // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idAquario) {
+    function plotarGrafico(resposta, idCorrida) {
 
         console.log('iniciando plotagem do gráfico...');
 
@@ -190,14 +183,14 @@
         let dados = {
             labels: labels,
             datasets: [{
-                label: 'Umidade',
+                label: 'Distância (km)',
                 data: [],
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
             },
             {
-                label: 'Temperatura',
+                label: 'Tempo (s)',
                 data: [],
                 fill: false,
                 borderColor: 'rgb(199, 52, 52)',
@@ -210,11 +203,11 @@
         console.log(resposta)
 
         // Inserindo valores recebidos em estrutura para plotar o gráfico
-        for (i = 0; i < resposta.length; i++) {
-            var registro = resposta[i];
-            labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.umidade);
-            dados.datasets[1].data.push(registro.temperatura);
+        for (let i = 0; i < resposta.length; i++) {
+            let registro = resposta[i];
+            labels.push(registro.dtCorrida); // data da corrida para o eixo X
+            dados.datasets[0].data.push(registro.distancia); // distância
+            dados.datasets[1].data.push(convertTimeToSeconds(registro.tempo)); // tempo convertido para número (segundos)
         }
 
         console.log('----------------------------------------------')
@@ -233,11 +226,11 @@
 
         // Adicionando gráfico criado em div na tela
         let myChart = new Chart(
-            document.getElementById(`myChartCanvas${idAquario}`),
+            document.getElementById(`myChartCanvas${idCorrida}`),
             config
         );
 
-        setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
+        setTimeout(() => atualizarGrafico(idCorrida, dados, myChart), 2000);
     }
 
 
@@ -246,21 +239,21 @@
 
     //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
     //     Para ajustar o "select", ajuste o comando sql em src/models
-    function atualizarGrafico(idAquario, dados, myChart) {
+    function atualizarGrafico(idCorrida, dados, myChart) {
 
 
 
-        fetch(`/medidas/tempo-real/${idAquario}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/tempo-real/${idCorrida}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (novoRegistro) {
 
-                    obterdados(idAquario);
-                    // alertar(novoRegistro, idAquario);
+                    obterdados(idCorrida);
+                    // alertar(novoRegistro, idCorrida);
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                     console.log(`Dados atuais do gráfico:`);
                     console.log(dados);
 
-                    let avisoCaptura = document.getElementById(`avisoCaptura${idAquario}`)
+                    let avisoCaptura = document.getElementById(`avisoCaptura${idCorrida}`)
                     avisoCaptura.innerHTML = ""
 
 
@@ -288,12 +281,12 @@
                     }
 
                     // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idCorrida, dados, myChart), 2000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
                 // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idCorrida, dados, myChart), 2000);
             }
         })
             .catch(function (error) {
