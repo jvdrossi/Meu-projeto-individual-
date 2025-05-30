@@ -70,7 +70,43 @@
 
     let proximaAtualizacao;
 
-    window.onload = exibirCorridaDoUsuario();
+    function carregarCorridasDoUsuario() {
+    fetch(`/corrida/usuario/${sessionStorage.ID_USUARIO}`)
+        .then(res => res.json())
+        .then(corridas => {
+            if (corridas.length > 0) {
+                sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
+                exibirResumoUltimaCorrida(corridas[0]);
+                exibirCorridaDoUsuario(); // agora sim chamamos essa!
+            } else {
+                alert("Nenhuma corrida encontrada.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao carregar corridas do usuário", erro);
+        });
+}
+
+
+    function exibirResumoUltimaCorrida(ultimaCorrida) {
+    document.getElementById('tituloCorrida').innerText = ultimaCorrida.descricao;
+    document.getElementById('totalCorridas').innerText = JSON.parse(sessionStorage.Ultima_corrida).length;
+    document.getElementById('ultimaDistancia').innerText = `${ultimaCorrida.distancia} km`;
+    document.getElementById('ultimoTempo').innerText = ultimaCorrida.tempo;
+
+    const segundosTotais = converterTempoParaSegundos(ultimaCorrida.tempo);
+    const paceSegundos = segundosTotais / ultimaCorrida.distancia;
+    const minutos = Math.floor(paceSegundos / 60);
+    const segundos = Math.floor(paceSegundos % 60).toString().padStart(2, '0');
+    document.getElementById('pace').innerText = `${minutos}:${segundos} min/km`;
+}
+
+    function converterTempoParaSegundos(tempo) {
+    const [horas, minutos, segundos] = tempo.split(':').map(Number);
+    return horas * 3600 + minutos * 60 + segundos;
+}
+
+    window.onload = carregarCorridasDoUsuario();
 
     function exibirCorridaDoUsuario() {
         var corridas = JSON.parse(sessionStorage.Ultima_corrida);

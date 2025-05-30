@@ -17,6 +17,7 @@ var app = express();
 
 var usuarioRouter = require("./src/routes/usuarios");
 var calculadoraRouter = require("./src/routes/Calculadora");
+var dashboardRouter = require("./src/routes/Dashboard");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +27,8 @@ app.use(cors());
 
 app.use("/usuarios", usuarioRouter);
 app.use("/calculadora", calculadoraRouter);
+app.use("/dashboard", dashboardRouter);
+
 
 app.listen(PORTA_APP, function () {
     console.log(`

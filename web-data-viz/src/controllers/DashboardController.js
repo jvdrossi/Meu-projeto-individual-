@@ -1,9 +1,9 @@
-var corridaModel = require("../models/corridaModel");
+var dashboardModel = require("../models/DashboardModel");
 
 function listarCorridasUsuario(req, res) {
     var idUsuario = req.params.idUsuario;
 
-    corridaModel.buscarCorridasDoUsuario(idUsuario)
+    dashboardModel.buscarCorridasDoUsuario(idUsuario)
         .then(resultado => {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);

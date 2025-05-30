@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var corridaController = require("../controllers/corridaController");
+var dashboardController = require("../controllers/DashboardController");
 
-router.get("/usuario/:idUsuario", corridaController.listarCorridasUsuario);
+router.get("/usuario/:idUsuario", dashboardController.listarCorridasUsuario);
 
 module.exports = router;
