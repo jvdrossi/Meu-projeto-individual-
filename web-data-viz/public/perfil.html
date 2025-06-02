@@ -16,7 +16,7 @@
         <section>
             <div class="barra-lateral-perfil">
                 <img src="./assets/img/cronometro.png" alt="Foto de Perfil da Dashboard">
-                <h1>Johnny</h1>
+                <h1 id="titulo_nome_usuario"></h1>
             </div>
 
             <!-- Navegação do usuário-->
@@ -78,7 +78,7 @@
 
 
 <script>
-
+    titulo_nome_usuario.innerHTML = `<h1 id="titulo_nome_usuario">${sessionStorage.NOME_USUARIO}</h1>`
 
     function calcular() {
         // aguardar();
@@ -118,8 +118,11 @@
             }).then(function (resposta) {
                     console.log("resposta: ", resposta);
                     if (resposta.ok) {
+                            console.log(resposta);
+                            
+
                         setTimeout(() => {
-                            window.location = "login.html";
+                            window.location = "dashboard/dashboard.html";
                         }, "2000");
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
@@ -127,5 +130,8 @@
                 })
         }
     }
+
+
+    
 
 </script>

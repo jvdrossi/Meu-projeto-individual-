@@ -24,13 +24,13 @@
         <header class="top-bar">
             <div class="logo">🏃 Rundoɹd</div>
             <div class="date">20 de Maio</div>
-            <div class="profile">Johnny ⬇</div>
+            <div id="nome_usuario_dashboard" class="profile"> ⬇</div>
         </header>
 
         <!-- Conteúdo Principal -->
         <main class="content">
             <!-- Painel Esquerdo -->
-            <section class="left-panel">
+            <section id="left_panel" class="left-panel">
                 <h2 id="nome_da_Corrida">Corrida da Manhã</h2>
                 <div class="circle-stats" id="totalCorridas">10cima</div>
                 <div class="stats">
@@ -55,7 +55,7 @@
                     <li>🏃 [1 no pace geral !]</li>
                     <li>🔥 Total da semana: 33km</li>
                     <li>🔥 [Top 3 do Quiz]</li>
-                    </ul>
+                </ul>
                 <button onclick="window.location='../perfil.html'">Voltar ao perfil</button>
             </section>
         </main>
@@ -66,45 +66,46 @@
 
 
 <script>
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    window.onload = dados_ultima_corrida()
 
+    nome_usuario_dashboard.innerHTML = `<div id="nome_usuario_dashboard" class="profile">${sessionStorage.NOME_USUARIO} ⬇</div>`
     let proximaAtualizacao;
 
     function carregarCorridasDoUsuario() {
-    fetch(`/corrida/usuario/${sessionStorage.ID_USUARIO}`)
-        .then(res => res.json())
-        .then(corridas => {
-            if (corridas.length > 0) {
-                sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
-                exibirResumoUltimaCorrida(corridas[0]);
-                exibirCorridaDoUsuario(); // agora sim chamamos essa!
-            } else {
-                alert("Nenhuma corrida encontrada.");
-            }
-        })
-        .catch(erro => {
-            console.error("Erro ao carregar corridas do usuário", erro);
-        });
-}
+        fetch(`/corrida/usuario/${sessionStorage.ID_USUARIO}`)
+            .then(res => res.json())
+            .then(corridas => {
+                if (corridas.length > 0) {
+                    sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
+                    exibirResumoUltimaCorrida(corridas[0]);
+                    exibirCorridaDoUsuario(); // agora sim chamamos essa!
+                } else {
+                    alert("Nenhuma corrida encontrada.");
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar corridas do usuário", erro);
+            });
+    }
 
 
     function exibirResumoUltimaCorrida(ultimaCorrida) {
-    document.getElementById('tituloCorrida').innerText = ultimaCorrida.descricao;
-    document.getElementById('totalCorridas').innerText = JSON.parse(sessionStorage.Ultima_corrida).length;
-    document.getElementById('ultimaDistancia').innerText = `${ultimaCorrida.distancia} km`;
-    document.getElementById('ultimoTempo').innerText = ultimaCorrida.tempo;
+        document.getElementById('tituloCorrida').innerText = ultimaCorrida.descricao;
+        document.getElementById('totalCorridas').innerText = JSON.parse(sessionStorage.Ultima_corrida).length;
+        document.getElementById('ultimaDistancia').innerText = `${ultimaCorrida.distancia} km`;
+        document.getElementById('ultimoTempo').innerText = ultimaCorrida.tempo;
 
-    const segundosTotais = converterTempoParaSegundos(ultimaCorrida.tempo);
-    const paceSegundos = segundosTotais / ultimaCorrida.distancia;
-    const minutos = Math.floor(paceSegundos / 60);
-    const segundos = Math.floor(paceSegundos % 60).toString().padStart(2, '0');
-    document.getElementById('pace').innerText = `${minutos}:${segundos} min/km`;
-}
+        const segundosTotais = converterTempoParaSegundos(ultimaCorrida.tempo);
+        const paceSegundos = segundosTotais / ultimaCorrida.distancia;
+        const minutos = Math.floor(paceSegundos / 60);
+        const segundos = Math.floor(paceSegundos % 60).toString().padStart(2, '0');
+        document.getElementById('pace').innerText = `${minutos}:${segundos} min/km`;
+    }
 
     function converterTempoParaSegundos(tempo) {
-    const [horas, minutos, segundos] = tempo.split(':').map(Number);
-    return horas * 3600 + minutos * 60 + segundos;
-}
+        const [horas, minutos, segundos] = tempo.split(':').map(Number);
+        return horas * 3600 + minutos * 60 + segundos;
+    }
 
     window.onload = carregarCorridasDoUsuario();
 
@@ -329,5 +330,58 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
 
+    }
+
+    function dados_ultima_corrida() {
+
+        var idVar = sessionStorage.ID_USUARIO;
+
+
+        fetch("/perfil/dados_ultima_corrida", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idServer: idVar,
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                return resposta.json()
+                    .then(json => {
+                        // console.log(json);
+                        var pace = json[0].tempo / json[0].distancia;
+                        console.log(JSON.stringify(json));
+                        console.log("oiiiiii funfou");
+                        
+            
+                        left_panel.innerHTML = `<h2 id="nome_da_Corrida">${json[0].nome}</h2>
+                <div class="circle-stats" id="totalCorridas">${json[0].qtdCorrida}</div>
+                <div class="stats">
+                    <p>Distância: <strong id="ultimaDistancia">${json[0].distancia}</strong></p>
+                    <p>Duração: <strong id="ultimoTempo">${json[0].tempo}</strong></p>
+                    <p>Ritmo: <strong id="pace">${pace}</strong></p>
+                </div>`;
+
+                    });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
     }
 </script>
