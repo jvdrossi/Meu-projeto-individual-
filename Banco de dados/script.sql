@@ -21,41 +21,18 @@ dtNasc DATE,
 email VARCHAR(45) UNIQUE,
 senha VARCHAR(45));
 
-CREATE TABLE quiz (
-idQuiz INT PRIMARY KEY AUTO_INCREMENT,
-dtCriacao DATETIME,
-qtdPergunta INT);
-
-CREATE TABLE perguntas (
-idPergunta INT PRIMARY KEY AUTO_INCREMENT,
-pergunta VARCHAR(45),
-fkQuiz INT,
-CONSTRAINT fkPerguntaQuiz FOREIGN KEY (fkQuiz)
-REFERENCES quiz (idQuiz)); 
-
-CREATE TABLE respostas (
-idResposta INT PRIMARY KEY AUTO_INCREMENT,
-descricao VARCHAR(200),
-resposta TINYINT,
-fkPergunta int,
-CONSTRAINT fkRespostaPergunta FOREIGN KEY (fkPergunta)
-REFERENCES perguntas (idPergunta)); 
-
-
 CREATE TABLE resultado (
+idResultado INT PRIMARY KEY AUTO_INCREMENT,
 dtResultado DATETIME,
-fkQuiz INT,
+pontos INT,
 fkUsuario INT,
-CONSTRAINT pkComposta PRIMARY KEY (fkQuiz, fkUsuario),
-CONSTRAINT fkResultadoQuiz FOREIGN KEY (fkQuiz)
-REFERENCES quiz(idQuiz),
 CONSTRAINT fkResultadoUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario) 
-); 
+);  
 
-
+select * from corrida;
 select * from usuario;
-
+select * from resultado;
 
 -- FAZER OS JOIN
 
