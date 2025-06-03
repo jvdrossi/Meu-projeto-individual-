@@ -16,7 +16,7 @@ function buscarCorridasDoUsuario(idUsuario) {
 
 var database = require("../database/config")
 
-function dados_ultima_corrida(id) {
+function dados_ultima_corrida(idUsuario) {
     var instrucaoSql = `
         SELECT corrida.nome as corrida,
         corrida.dtCorrida as dataCorrida,
@@ -24,7 +24,7 @@ function dados_ultima_corrida(id) {
         corrida.tempo as tempo,
         COUNT(corrida.idCorrida) as qtdCorrida
         FROM usuario
-        JOIN corrida ON corrida.fkUsuario = usuario.idUsuario WHERE fkUsuario = ${id} GROUP BY corrida.idCorrida ORDER BY corrida.idCorrida DESC LIMIT 1;
+        JOIN corrida ON corrida.fkUsuario = usuario.idUsuario WHERE fkUsuario = ${idUsuario} GROUP BY corrida.idCorrida ORDER BY corrida.idCorrida DESC LIMIT 1;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

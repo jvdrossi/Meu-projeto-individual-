@@ -48,6 +48,24 @@ c.tempo
 FROM usuario AS u
 JOIN corrida as c ON c.fkUsuario = u.idUsuario;
 
+SELECT corrida.idCorrida AS id, 
+       corrida.nome AS descricao,
+       corrida.dtCorrida AS dataCorrida, 
+       corrida.distancia AS distancia, 
+       corrida.tempo AS tempo
+FROM corrida
+WHERE fkUsuario = (SELECT idUsuario FROM usuario WHERE email = 'email_do_usuario_aqui') 
+ORDER BY dtCorrida DESC
+LIMIT 10;
+        
+        SELECT corrida.nome as corrida,
+        corrida.dtCorrida as dataCorrida,
+        corrida.distancia as distancia,
+        corrida.tempo as tempo,
+        COUNT(corrida.idCorrida) as qtdCorrida
+        FROM usuario
+        JOIN corrida ON corrida.fkUsuario = usuario.idUsuario WHERE fkUsuario = idUsuario GROUP BY corrida.idCorrida ORDER BY corrida.idCorrida DESC LIMIT 1;
+
 -- Usuário, Resultado e Quiz
 SELECT * FROM resultado
 JOIN usuario ON resultado.fkUsuario = usuario.idUsuario
