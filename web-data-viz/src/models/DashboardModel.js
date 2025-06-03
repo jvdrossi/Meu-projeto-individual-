@@ -31,10 +31,11 @@ function dados_ultima_corrida(idUsuario) {
 }
 
 
-module.exports = {
-    dados_ultima_corrida,
-};
+
 
 module.exports = {
+    dados_ultima_corrida,
     buscarCorridasDoUsuario
 };
+
+
