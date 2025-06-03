@@ -7,6 +7,7 @@ function calcular(req, res) {
     var dtCorrida = req.body.data_perfilServer;
     var distancia = req.body.distancia_perfilServer;
     var tempo = req.body.tempo_perfilServer;
+    var pace = req.body.paceServer;
 
     // Faça as validações dos valores
       if (idUsuario == undefined) {
@@ -22,7 +23,7 @@ function calcular(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        CalculadoraModel.calcular(nome, dtCorrida, distancia, tempo, idUsuario)
+        CalculadoraModel.calcular(nome, dtCorrida, distancia, tempo, pace, idUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);

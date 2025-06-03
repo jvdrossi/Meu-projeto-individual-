@@ -80,58 +80,62 @@
 <script>
     titulo_nome_usuario.innerHTML = `<h1 id="titulo_nome_usuario">${sessionStorage.NOME_USUARIO}</h1>`
 
-    function calcular() {
-        // aguardar();
+   function calcular() {
+    var nome_perfilVar = input_nome_perfil.value;
+    var data_perfilVar = input_data_perfil.value;
+    var distancia_perfilVar = parseFloat(input_distancia_perfil.value);
+    var tempo_perfilVar = input_tempo_perfil.value;
 
-        //Recupere o valor da nova input pelo nome do id
-        // Agora vá para o método fetch logo abaixo
-        var nome_perfilVar = input_nome_perfil.value;
-        var data_perfilVar = input_data_perfil.value;
-        var distancia_perfilVar = input_distancia_perfil.value;
-        var tempo_perfilVar = input_tempo_perfil.value;
-       
-        
-        // var idEmpresaVincular
-
-        // Verificando se há algum campo em branco
-        if (
-            
-            nome_perfilVar == "" ||
-            data_perfilVar == "" ||
-            distancia_perfilVar == "" ||
-            tempo_perfilVar == ""
-           
-        ) alert("Erro")
-        else {
-            fetch("/Calculadora/calcular", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    idUsuarioServer: sessionStorage.ID_USUARIO,
-                    nome_perfilServer: nome_perfilVar,
-                    data_perfilServer: data_perfilVar,
-                    distancia_perfilServer: distancia_perfilVar,
-                    tempo_perfilServer: tempo_perfilVar,
-                }),
-            }).then(function (resposta) {
-                    console.log("resposta: ", resposta);
-                    if (resposta.ok) {
-                            console.log(resposta);
-                            
-
-                        setTimeout(() => {
-                            window.location = "dashboard/dashboard.html";
-                        }, "2000");
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                })
-        }
+    if (nome_perfilVar === "" || data_perfilVar === "" || isNaN(distancia_perfilVar) || tempo_perfilVar === "") {
+        alert("Erro: Preencha todos os campos corretamente!");
+        return;
     }
 
+    var tempoArray = tempo_perfilVar.split(":");
+    if (tempoArray.length !== 3) {
+        alert("Erro: O tempo deve estar no formato hh:mm:ss!");
+        return;
+    }
 
-    
+    var horas = parseInt(tempoArray[0]);
+    var minutos = parseInt(tempoArray[1]);
+    var segundos = parseInt(tempoArray[2]);
+
+    // Convertendo tempo para minutos corretamente
+    var tempoEmMinutos = (horas * 60) + minutos + (segundos / 60);
+    console.log("Tempo convertido para minutos:", tempoEmMinutos);
+
+    // Calculando pace sem arredondamento usando Math.trunc()
+    var paceDecimal = tempoEmMinutos / distancia_perfilVar;
+    var paceSemArredondamento = Math.trunc(paceDecimal * 100) / 100; // Removendo decimais extras sem arredondar
+    console.log("Pace calculado corretamente (sem arredondamento):", paceSemArredondamento);
+
+    fetch("/Calculadora/calcular", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idUsuarioServer: sessionStorage.ID_USUARIO,
+            nome_perfilServer: nome_perfilVar,
+            data_perfilServer: data_perfilVar,
+            distancia_perfilServer: distancia_perfilVar,
+            tempo_perfilServer: tempo_perfilVar,
+            paceServer: paceSemArredondamento // Agora correto para banco numérico
+        }),
+    }).then(function (resposta) {
+        console.log("Resposta do servidor:", resposta);
+        if (resposta.ok) {
+            setTimeout(() => {
+                window.location = "dashboard/dashboard.html";
+            }, 2000);
+        } else {
+            alert("Houve um erro ao tentar realizar o cadastro!");
+        }
+    }).catch(error => {
+        console.error("Erro na requisição:", error);
+        alert("Erro na requisição!");
+    });
+}
 
 </script>

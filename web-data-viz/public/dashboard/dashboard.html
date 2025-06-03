@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/nmp/chart.js"> </script>
 </head>
 
 <body onload="atualizarFeed()">
@@ -23,7 +24,7 @@
         <!-- Topo -->
         <header class="top-bar">
             <div class="logo">🏃 Rundoɹd</div>
-            <div class="date">20 de Maio</div>
+            <div class="date">11 de Junho</div>
             <div id="nome_usuario_dashboard" class="profile"> ⬇</div>
         </header>
 
@@ -42,7 +43,8 @@
 
             <!-- Painel Mapa -->
             <section class="map-panel">
-                <div class="map-placeholder">[ Grafico com 2 y = Tempo e distancia x = data ]</div>
+                <div class="map-placeholder"><canvas id="canva_grafico1"></canvas></div>
+                <div class="map-placeholder1">[ y = distancia x = data]</div>
                 <!-- <div class="map-placeholder">[ MAPA ]</div> -->
             </section>
 
@@ -365,4 +367,25 @@
 
         return false;
     }
+
+    // Graficos
+    
+
+    const chartData = {
+        labels: corrida,
+        datasets: [{
+            label: 'Maior pace por prova',
+            data: pace,
+            backgroundcolor: "#fff",
+            color: "#000"
+        }]
+    };
+
+    new Chart(document.getElementById('canva_grafico1'), {
+        type: 'bar',
+        data: chartData
+    });
+
+
+
 </script>
