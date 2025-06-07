@@ -42,12 +42,15 @@
             <!-- Painel Direito -->
             <section class="right-panel">
                 <h3>Feed</h3>
-                <ul>
-                    <li>✅ Atingiu 15k!</li>
-                    <li>🏆 Posição do ranking nesta distância!</li>
-                    <li>🏃 Pace geral excelente!</li>
-                    <li>🔥 Total da semana: 33km</li>
-                    <li>🔥 Top 3 do Quiz!</li>
+                <ul id="right_panel">
+                    <li id="kpi_maior_distancia">✅ Sua maior distancia: 15km!</li>
+                    <li id="kpi_ranking_mair_distancia">🏆 Posição do ranking na maior distância!</li>
+                    <li id="kpi_ranking_minimo_pace">🏃 Minimo Pace</li>
+                    <li id="kpi_distancia_semana">🔥 Total na semana: 33km</li>
+                    <li id="kpi_distancia_mes">🔥 Total no mês: 33km</li>
+                    <li id="kpi_distancia_ano">🔥 Total no ano: 33km</li>
+                    <li id="kpi_distancia_jornada">🔥 Total na jornada: 33km</li>
+                    <li id="kpi_score_quiz">🏆 seu score Quiz!</li>
                 </ul>
                 <button onclick="window.location='../perfil.html'">Voltar ao perfil</button>
             </section>
@@ -61,8 +64,9 @@
 <script>
     window.onload = () => {
     inicializarDashboard();
+    dadosFeedCorrida();
     carregarCorridasParaGrafico(); // gráfico de pace
-    carregarGraficoDistanciaPorData(); // gráfico de distância por data
+    // carregarGraficoDistanciaPorData(); // gráfico de distância por data
 };
 
     function inicializarDashboard() {
@@ -102,8 +106,29 @@
                 <div class="stats">
                     <p>Distância: <strong id="ultimaDistancia">${json.distancia}</strong></p>
                     <p>Duração: <strong id="ultimoTempo">${json.tempo}</strong></p>
-                    <p>Ritmo: <strong id="pace">${pace} min/km</strong></p>
+                    <p>Pace: <strong id="pace">${pace} min/km</strong></p>
                 </div>`;
+            })
+            .catch(err => console.error("Erro ao carregar dados da última corrida:", err));
+    }
+
+     function dadosFeedCorrida() {
+        fetch("/dashboard/dadosFeedCorrida", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idServer: sessionStorage.ID_USUARIO })
+        })
+            .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
+            .then(json => {
+                console.log(json)
+                right_panel.innerHTML = `
+                    <li id="kpi_maior_distancia">✅ Sua maior distancia: ${json.distancia_maxima}km!</li>
+                    <li id="kpi_ranking_mair_distancia">🏆 Ranking na maior distância: ${json.posicao_distancia_maxima}º lugar</li>
+                    <li id="kpi_ranking_minimo_pace">🏃 Seu melhor Pace: ${json.min_pace} min/km</li>
+                    <li id="kpi_distancia_semana">🔥 Total na semana: ${json.distancia_semana}km</li>
+                    <li id="kpi_distancia_mes">🔥 Total no mês: ${json.distancia_mes}km</li>
+                    <li id="kpi_distancia_ano">🔥 Total no ano: ${json.distancia_ano}km</li>
+                    <li id="kpi_distancia_jornada">🔥 Total na jornada: ${json.distancia_total}km</li>`;
             })
             .catch(err => console.error("Erro ao carregar dados da última corrida:", err));
     }
@@ -149,54 +174,54 @@
     }
 
 
-    function carregarGraficoDistanciaPorData() {
-    fetch(`/corrida/dashboard/${sessionStorage.ID_USUARIO}`)
-        .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
-        .then(corridas => {
-            if (!corridas.length) return;
+//     function carregarGraficoDistanciaPorData() {
+//     fetch(`/corrida/dashboard/${sessionStorage.ID_USUARIO}`)
+//         .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
+//         .then(corridas => {
+//             if (!corridas.length) return;
 
-            const labels = corridas.map(c => {
-                const data = new Date(c.dtCorrida);
-                return data.toLocaleDateString('pt-BR'); // ou use data.toISOString().split('T')[0];
-            });
+//             const labels = corridas.map(c => {
+//                 const data = new Date(c.dtCorrida);
+//                 return data.toLocaleDateString('pt-BR'); // ou use data.toISOString().split('T')[0];
+//             });
 
-            const dataDistancias = corridas.map(c => parseFloat(c.distancia));
+//             const dataDistancias = corridas.map(c => parseFloat(c.distancia));
 
-            const chartData = {
-                labels: labels,
-                datasets: [{
-                    label: "Distância (km)",
-                    data: dataDistancias,
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    tension: 0.3
-                }]
-            };
+//             const chartData = {
+//                 labels: labels,
+//                 datasets: [{
+//                     label: "Distância (km)",
+//                     data: dataDistancias,
+//                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
+//                     borderColor: 'rgba(75, 192, 192, 1)',
+//                     borderWidth: 2,
+//                     tension: 0.3
+//                 }]
+//             };
 
-            new Chart(document.getElementById('canva_grafico2'), {
-                type: 'line', // ou "bar"
-                data: chartData,
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Distância (km)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Data da Corrida'
-                            }
-                        }
-                    }
-                }
-            });
-        })
-        .catch(erro => console.error("Erro ao carregar gráfico de distância:", erro));
-}
+//             new Chart(document.getElementById('canva_grafico2'), {
+//                 type: 'line', // ou "bar"
+//                 data: chartData,
+//                 options: {
+//                     responsive: true,
+//                     scales: {
+//                         y: {
+//                             beginAtZero: true,
+//                             title: {
+//                                 display: true,
+//                                 text: 'Distância (km)'
+//                             }
+//                         },
+//                         x: {
+//                             title: {
+//                                 display: true,
+//                                 text: 'Data da Corrida'
+//                             }
+//                         }
+//                     }
+//                 }
+//             });
+//         })
+//         .catch(erro => console.error("Erro ao carregar gráfico de distância:", erro));
+// }
 </script>

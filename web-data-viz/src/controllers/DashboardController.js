@@ -46,7 +46,40 @@ function dados_ultima_corrida(req, res) {
     }
 }
 
+function dadosFeedCorrida(req, res) {
+    var id = req.body.idServer;
+
+    if (id == undefined) {
+        res.status(400).send("ID do usuário está undefined!");
+    } else {
+        dashboardModel.dadosFeedCorrida(id)
+            .then(resultado => {
+                if (resultado.length == 1) {
+                    res.json({
+                        distancia_maxima: resultado[0].distancia,
+                        posicao_distancia_maxima:resultado[0].Ranking_distancia,
+                        min_pace: resultado[0].min_pace,
+                        distancia_semana: resultado[0].distancia_total_da_semana,
+                        distancia_mes: resultado[0].distancia_total_do_mes,
+                        distancia_ano: resultado[0].distancia_total_do_ano,
+                        distancia_total: resultado[0].distancia_total_da_vida
+
+                    });
+                } else if (resultado.length == 0) {
+                    res.status(404).send("Nenhuma corrida encontrada.");
+                } else {
+                    res.status(500).send("Erro inesperado: mais de uma corrida retornada.");
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao buscar dados da última corrida:", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
 module.exports = {
     dados_ultima_corrida,
-    listarCorridasUsuario
+    listarCorridasUsuario,
+    dadosFeedCorrida
 };
