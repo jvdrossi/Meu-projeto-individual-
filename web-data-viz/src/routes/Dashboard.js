@@ -1,10 +1,10 @@
-var express = require("express");
-var router = express.Router();
-var dashboardController = require("../controllers/DashboardController");
+const express = require("express");
+const router  = express.Router();
+const dashboardController = require("../controllers/DashboardController");
 
-router.get("/usuario/:idUsuario", dashboardController.listarCorridasUsuario);
-router.post("/dashboardController/dados_ultima_corrida", function (req, res) {
-    dashboardController.dados_ultima_corrida(req, res);
-});
+// AGORA sem o “dashboard” duplicado
+router.get("/:idUsuario",             dashboardController.listarCorridasUsuario);
+router.post("/dados_ultima_corrida",  dashboardController.dados_ultima_corrida);
+
 
 module.exports = router;
