@@ -1,17 +1,6 @@
-CREATE DATABASE correr_com_proposito;
+CREATE DATABASE correr_com_proposito; 
 
 USE correr_com_proposito;
-
-CREATE TABLE corrida (
-idCorrida INT PRIMARY KEY AUTO_INCREMENT,
-nome VARCHAR(45),
-dtCorrida DATETIME,
-distancia DECIMAL (6,2),
-tempo TIME,
-fkUsuario INT,
-CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario)
-REFERENCES usuario(idUsuario)
-); 
 
 CREATE TABLE usuario (
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
@@ -20,6 +9,18 @@ genero VARCHAR(45),
 dtNasc DATE,
 email VARCHAR(45) UNIQUE,
 senha VARCHAR(45));
+
+CREATE TABLE corrida (
+idCorrida INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45),
+dtCorrida DATETIME,
+distancia DECIMAL (6,2),
+tempo TIME,
+pace FLOAT,
+fkUsuario INT,
+CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario)
+REFERENCES usuario(idUsuario)
+);  
 
 CREATE TABLE resultado (
 idResultado INT PRIMARY KEY AUTO_INCREMENT,
@@ -30,9 +31,10 @@ CONSTRAINT fkResultadoUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario) 
 );  
 
-select * from corrida;
 select * from usuario;
+select * from corrida;
 select * from resultado;
+
 
 -- FAZER OS JOIN
 
@@ -72,8 +74,8 @@ SELECT * FROM (
     SELECT MAX(c.distancia) AS distancia,
            RANK() OVER(ORDER BY MAX(c.distancia) DESC) AS Ranking_distancia,
            MIN(c.pace) AS min_pace,
-           SUM(CASE WHEN c.dtCorrida >= NOW() - INTERVAL 7 DAY THEN c.distancia ELSE 0 END) AS distancia_total_da_semana,
            SUM(CASE WHEN MONTH(c.dtCorrida) = MONTH(NOW()) AND YEAR(c.dtCorrida) = YEAR(NOW()) THEN c.distancia ELSE 0 END) AS distancia_total_do_mes,
+           SUM(CASE WHEN WEEK(c.dtCorrida, 1) = WEEK(NOW(), 1) AND YEAR(c.dtCorrida) = YEAR(NOW()) THEN c.distancia ELSE 0 END) AS distancia_total_da_semana,
            SUM(CASE WHEN YEAR(c.dtCorrida) = YEAR(NOW()) THEN c.distancia ELSE 0 END) AS distancia_total_do_ano,
            SUM(c.distancia) AS distancia_total_da_vida,
            c.fkUsuario
