@@ -78,8 +78,34 @@ function dadosFeedCorrida(req, res) {
     }
 }
 
+function carregarGraficoDistanciaPorData(req, res) {
+    var id = req.body.idServer;
+
+    if (!id) {
+        return res.status(400).send("ID do usuário está indefinido!");
+    }
+
+    dashboardModel.carregarGraficoDistanciaPorData(id)
+        .then(resultado => {
+            console.log("Resposta do banco:", resultado); // Verificando se os dados realmente contêm dataCorrida
+
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(404).send("Nenhuma corrida encontrada.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar dados do gráfico:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
 module.exports = {
     dados_ultima_corrida,
     listarCorridasUsuario,
-    dadosFeedCorrida
+    dadosFeedCorrida,
+    carregarGraficoDistanciaPorData
 };

@@ -13,14 +13,14 @@ senha VARCHAR(45));
 CREATE TABLE corrida (
 idCorrida INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
-dtCorrida DATETIME,
+dtCorrida DATE,
 distancia DECIMAL (6,2),
 tempo TIME,
 pace FLOAT,
 fkUsuario INT,
 CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario)
-);  
+);
 
 CREATE TABLE resultado (
 idResultado INT PRIMARY KEY AUTO_INCREMENT,

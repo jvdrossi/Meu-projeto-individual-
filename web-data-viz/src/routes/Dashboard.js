@@ -6,6 +6,7 @@ const dashboardController = require("../controllers/DashboardController");
 router.get("/:idUsuario",             dashboardController.listarCorridasUsuario);
 router.post("/dados_ultima_corrida",  dashboardController.dados_ultima_corrida);
 router.post("/dadosFeedCorrida",  dashboardController.dadosFeedCorrida);
+router.post("/carregarGraficoDistanciaPorData",  dashboardController.carregarGraficoDistanciaPorData);
 
 
 module.exports = router;

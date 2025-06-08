@@ -138,20 +138,35 @@
             .catch(err => console.error("Erro ao carregar dados da última corrida:", err));
     }
 
-    function carregarCorridasParaGrafico() {
-        fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
-            .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
-            .then(corridas => {
-                if (!corridas.length) return;
+    let graficoPace = null; // Variável global para armazenar o gráfico
 
-                sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
-                const labels = corridas.map(c => c.descricao);
-                const data = corridas.map(c => {
-                    const tempoMinutos = tempoParaMinutos(c.tempo);
-                    return (tempoMinutos / parseFloat(c.distancia)).toFixed(2);
-                });
+function carregarCorridasParaGrafico() {
+    fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
+        .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
+        .then(corridas => {
+            if (!corridas.length) return;
 
-                const chartData = {
+            sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
+            const labels = corridas.map(c => c.descricao);
+            const data = corridas.map(c => {
+                const tempoMinutos = tempoParaMinutos(c.tempo);
+                return (tempoMinutos / parseFloat(c.distancia)).toFixed(2);
+            });
+
+            const ctx = document.getElementById('canva_grafico1').getContext('2d');
+            if (!ctx) {
+                console.error("Elemento canvas não encontrado!");
+                return;
+            }
+
+            // **Correção: destruindo o gráfico anterior antes de criar um novo**
+            if (graficoPace) {
+                graficoPace.destroy();
+            }
+
+            graficoPace = new Chart(ctx, {
+                type: 'bar',
+                data: {
                     labels: labels,
                     datasets: [{
                         label: "Pace (min/km)",
@@ -160,90 +175,94 @@
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     }]
-                };
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(erro => console.error("Erro ao carregar corridas:", erro));
+}
 
-                new Chart(document.getElementById('canva_grafico1'), {
-                    type: 'bar',
-                    data: chartData,
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
+
+ let graficoDistanciaPorData = null; // Variável global para armazenar o gráfico
+
+function carregarGraficoDistanciaPorData() {
+    fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
+        .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
+        .then(corridas => {
+            console.log("Dados recebidos no frontend:", corridas); // Verifica se os dados chegaram corretamente
+
+            if (!corridas.length) {
+                console.warn("Nenhuma corrida encontrada.");
+                return;
+            }
+
+            sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
+
+            // Garantindo que a data seja usada corretamente
+            const labels = corridas.map(c => c.dataCorrida ?? "Sem Data");
+            const data = corridas.map(c => parseFloat(c.distancia));
+
+            const ctx = document.getElementById('canva_grafico2').getContext('2d');
+            if (!ctx) {
+                console.error("Elemento canvas não encontrado!");
+                return;
+            }
+
+            if (graficoDistanciaPorData) {
+                graficoDistanciaPorData.destroy();
+            }
+
+            graficoDistanciaPorData = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Distância (km)",
+                        data: data,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'category',
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            title: {
+                                display: true,
+                                text: 'Data da Corrida'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Distância (km)'
                             }
                         }
                     }
-                });
-            })
-            .catch(erro => console.error("Erro ao carregar corridas:", erro));
-    }
-
-    let graficoDistanciaPorData = null; // Variável global para armazenar o gráfico
-
-    function carregarGraficoDistanciaPorData() {
-        fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
-            .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
-            .then(corridas => {
-                if (!corridas.length) {
-                    console.warn("Nenhuma corrida encontrada.");
-                    return;
                 }
-
-                console.log("Dados recebidos:", corridas);
-
-                sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
-
-                // Corrigindo a conversão da data
-                const labels = corridas.map(c => {
-                    if (!c.dataCorrida) return "Data Inválida"; // Prevenção de erro
-
-                    return new Date(c.dataCorrida).toLocaleDateString('pt-BR'); // Exibe como DD/MM/AAAA
-                });
+            });
+        })
+        .catch(erro => console.error("Erro ao carregar corridas:", erro));
+}
 
 
 
-
-                const data = corridas.map(c => parseFloat(c.distancia));
-
-                const ctx = document.getElementById('canva_grafico2').getContext('2d');
-                if (!ctx) {
-                    console.error("Elemento canvas não encontrado!");
-                    return;
-                }
-
-                if (graficoDistanciaPorData) {
-                    graficoDistanciaPorData.destroy();
-                }
-
-                graficoDistanciaPorData = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: "Distância (km)",
-                            data: data,
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 2,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Distância (km)'
-                                }
-                            }
-                        }
-                    }
-                });
-            })
-            .catch(erro => console.error("Erro ao carregar corridas:", erro));
-    }
 
 
 </script>

@@ -2,6 +2,10 @@ var database = require("../database/config");
 
 var database = require("../database/config");
 
+var dashboardModel = require("../models/DashboardModel");
+
+
+
 function buscarCorridasDoUsuario(idUsuario) {
     var instrucaoSql = `
         SELECT idCorrida AS id, nome AS descricao, dtCorrida, distancia, tempo
@@ -52,13 +56,39 @@ function dadosFeedCorrida(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function carregarGraficoDistanciaPorData(req, res) {
+    var id = req.body.idServer;
+
+    if (!id) {
+        return res.status(400).send("ID do usuário está indefinido!");
+    }
+
+    dashboardModel.carregarGraficoDistanciaPorData(id)
+        .then(resultado => {
+            console.log("Dados retornados pela API:", resultado); // Verifica se dataCorrida está correta
+
+            if (resultado.length > 0) {
+                res.status(200).json(resultado); // Agora enviamos todos os registros ao frontend
+            } else {
+                res.status(404).send("Nenhuma corrida encontrada.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar dados do gráfico:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
 
 
 
 module.exports = {
     dados_ultima_corrida,
     buscarCorridasDoUsuario,
-    dadosFeedCorrida
+    dadosFeedCorrida,
+    carregarGraficoDistanciaPorData
 };
 
 
