@@ -66,33 +66,29 @@
 </html>
 
 <script>
-    // Array para armazenar empresas cadastradas para validação de código de ativação 
-    let listaEmpresasCadastradas = [];
 
     function cadastrar() {
-        // aguardar();
 
-        //Recupere o valor da nova input pelo nome do id
-        // Agora vá para o método fetch logo abaixo
         var nomeVar = nome_input.value;
         var generoVar = genero_input.value;
         var dataVar = data_input.value;
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
-       
-        
-        // var idEmpresaVincular
 
-        // Verificando se há algum campo em branco
         if (
             nomeVar == "" ||
             generoVar == "" ||
             dataVar == "" ||
             emailVar == "" ||
             senhaVar == ""
-           
-        ) alert("Erro")
+
+        ) {
+            alert("Erro, preencha todos os campos para cadastrar-se")
+        } else if (!(emailVar.includes('@')) || !(emailVar.includes('.com'))) {
+            alert('Seu email precisa ter "@" e/ou ".com"')
+        }
         else {
+
             fetch("/usuarios/cadastrar", {
                 method: "POST",
                 headers: {
@@ -108,15 +104,16 @@
                     idUsuarioServer: sessionStorage.ID_USUARIO
                 }),
             }).then(function (resposta) {
-                    console.log("resposta: ", resposta);
-                    if (resposta.ok) {
-                        setTimeout(() => {
-                            window.location = "login.html";
-                        }, "2000");
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                })
+                console.log("resposta: ", resposta);
+                console.log(resposta);
+
+                if (resposta.ok) {
+                    window.location.href = './login.html';
+                } else {
+                    alert("erro")
+                }
+
+            })
         }
     }
 </script>
