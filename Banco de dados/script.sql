@@ -24,16 +24,11 @@ REFERENCES usuario(idUsuario)
 
 CREATE TABLE resultado (
 idResultado INT PRIMARY KEY AUTO_INCREMENT,
-dtResultado DATETIME,
 pontos INT,
 fkUsuario INT,
 CONSTRAINT fkResultadoUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario) 
 );  
-SELECT TIME_FORMAT(pace, '%i:%s') AS tempo_formatado FROM corrida;
-
-select * from usuario;
-select * from corrida ORDER BY dtCorrida DESC limit 10;
 
 select * from usuario;
 select * from corrida;
