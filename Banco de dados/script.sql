@@ -16,11 +16,11 @@ nome VARCHAR(45),
 dtCorrida DATE,
 distancia DECIMAL (6,2),
 tempo TIME,
-pace FLOAT,
+pace TIME,
 fkUsuario INT,
 CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario)
-);
+); 
 
 CREATE TABLE resultado (
 idResultado INT PRIMARY KEY AUTO_INCREMENT,
@@ -30,6 +30,10 @@ fkUsuario INT,
 CONSTRAINT fkResultadoUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario) 
 );  
+SELECT TIME_FORMAT(pace, '%i:%s') AS tempo_formatado FROM corrida;
+
+select * from usuario;
+select * from corrida ORDER BY dtCorrida DESC limit 10;
 
 select * from usuario;
 select * from corrida;

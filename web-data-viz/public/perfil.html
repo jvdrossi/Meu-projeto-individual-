@@ -107,7 +107,7 @@
 
     // Calculando pace sem arredondamento usando Math.trunc()
     var paceDecimal = tempoEmMinutos / distancia_perfilVar;
-    var paceSemArredondamento = Math.trunc(paceDecimal);
+    var paceSemArredondamento = paceDecimal;
     console.log("Pace calculado corretamente (sem arredondamento):", paceSemArredondamento);
 
     fetch("/Calculadora/calcular", {

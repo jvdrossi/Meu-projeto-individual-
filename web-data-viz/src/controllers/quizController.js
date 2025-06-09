@@ -2,11 +2,10 @@ var quizModel = require("../models/quizModel")
 
 function envioscore(req, res) {   // envia os dados do quiz pro bd
     
-    var fk_usuario = req.body.fk_usuarioServer;
-    var score = req.body.scoreServer;
+    var idUsuario = req.body.idUsuarioServer;
+    var pontos = req.body.pontosServer;
 
-
-    quizModel.envioscore(score, fk_usuario)
+    quizModel.envioscore(pontos, idUsuario)
         .then(
             function (resultado) {
                 res.json(resultado);

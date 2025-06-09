@@ -65,16 +65,19 @@
 </html>
 
 <script>
-    window.onload = () => {
+
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    window.onload =
         inicializarDashboard();
-        dadosFeedCorrida();
-        carregarCorridasParaGrafico(); // gráfico de pace
-        carregarGraficoDistanciaPorData(); // gráfico de distância por data
-    };
+    dadosFeedCorrida();
+    dadosUltimaCorrida();
+    carregarCorridasParaGrafico(); // gráfico de pace
+    carregarGraficoDistanciaPorData(); // gráfico de distância por data
+    ;
 
     function inicializarDashboard() {
         document.getElementById("nome_usuario_dashboard").innerHTML = `${sessionStorage.NOME_USUARIO} ⬇`;
-        dadosUltimaCorrida();
         carregarCorridasParaGrafico();
         carregarGraficoDistanciaPorData();
     }
@@ -89,26 +92,33 @@
     }
 
     function dadosUltimaCorrida() {
-        fetch("/dashboard/dados_ultima_corrida", {
+        fetch("/Dashboard/dados_ultima_corrida", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idServer: sessionStorage.ID_USUARIO })
+            body: JSON.stringify({
+                idServer: idUsuario
+            })
         })
             .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
             .then(json => {
                 const tempoEmMinutos = tempoParaMinutos(json.tempo);
                 const distancia = parseFloat(json.distancia);
                 let pace = 0;
+                console.log(json);
 
                 if (distancia > 0) {
                     pace = (tempoEmMinutos / distancia).toFixed(2);
                 }
 
+                var data = new Date(json.dtCorrida);
+                var dataFormatada = data.toLocaleDateString('pt-br');
+
+
                 left_panel.innerHTML = `
                 <h2 id="nome_da_Corrida">${json.nome}</h2>
-                <div class="circle-stats" id="totalCorridas">nº de provas: ${json.qtdCorrida}</div>
+                <div class="circle-stats" id="totalCorridas">Nº de provas: ${json.qtdCorrida}</div>
                 <div class="stats">
-                    <p>Data: <strong id="ultimaData">${json.dtCorrida}</strong></p>
+                    <p>Data: <strong id="ultimaData">${dataFormatada}</strong></p>
                     <p>Distância: <strong id="ultimaDistancia">${json.distancia}</strong></p>
                     <p>Duração: <strong id="ultimoTempo">${json.tempo}</strong></p>
                     <p>Pace: <strong id="pace">${pace} min/km</strong></p>
@@ -133,133 +143,135 @@
                     <li id="kpi_distancia_semana">🔥 Total na semana: ${json.distancia_semana}km</li>
                     <li id="kpi_distancia_mes">🔥 Total no mês: ${json.distancia_mes}km</li>
                     <li id="kpi_distancia_ano">🔥 Total no ano: ${json.distancia_ano}km</li>
-                    <li id="kpi_distancia_jornada">🔥 Total na jornada: ${json.distancia_total}km</li>`;
+                    <li id="kpi_distancia_jornada">🔥 Total na jornada: ${json.distancia_total}km</li>
+                    <li id="kpi_score_quiz">🏆 Seu score Quiz: ${sessionStorage.SCORE_USUARIO} Pontos</li>
+                    `;
             })
             .catch(err => console.error("Erro ao carregar dados da última corrida:", err));
     }
 
-    let graficoPace = null; // Variável global para armazenar o gráfico
+    function carregarCorridasParaGrafico() {
 
-function carregarCorridasParaGrafico() {
-    fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
-        .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
-        .then(corridas => {
-            if (!corridas.length) return;
+        var idUsuario = sessionStorage.ID_USUARIO
 
-            sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
-            const labels = corridas.map(c => c.descricao);
-            const data = corridas.map(c => {
-                const tempoMinutos = tempoParaMinutos(c.tempo);
-                return (tempoMinutos / parseFloat(c.distancia)).toFixed(2);
-            });
+        fetch("/Dashboard/carregarCorridasParaGrafico", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idServer: idUsuario
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
 
-            const ctx = document.getElementById('canva_grafico1').getContext('2d');
-            if (!ctx) {
-                console.error("Elemento canvas não encontrado!");
-                return;
-            }
+            if (resposta.ok) {
+                console.log(resposta);
 
-            // **Correção: destruindo o gráfico anterior antes de criar um novo**
-            if (graficoPace) {
-                graficoPace.destroy();
-            }
+                return resposta.json()
+                    .then(json => {
+                        var listaPace = [];
+                        var listaNomeProva = [];
 
-            graficoPace = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "Pace (min/km)",
-                        data: data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                        for (let i = 0; i < json.length; i++) {
+                            listaPace.push(json[i].pace);
+                            listaNomeProva.push(json[i].descricao)
                         }
-                    }
-                }
-            });
-        })
-        .catch(erro => console.error("Erro ao carregar corridas:", erro));
-}
 
+                        var graficoCanva = document.getElementById('canva_grafico1');
 
- let graficoDistanciaPorData = null; // Variável global para armazenar o gráfico
-
-function carregarGraficoDistanciaPorData() {
-    fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
-        .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
-        .then(corridas => {
-            console.log("Dados recebidos no frontend:", corridas); // Verifica se os dados chegaram corretamente
-
-            if (!corridas.length) {
-                console.warn("Nenhuma corrida encontrada.");
-                return;
-            }
-
-            sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
-
-            // Garantindo que a data seja usada corretamente
-            const labels = corridas.map(c => c.dataCorrida ?? "Sem Data");
-            const data = corridas.map(c => parseFloat(c.distancia));
-
-            const ctx = document.getElementById('canva_grafico2').getContext('2d');
-            if (!ctx) {
-                console.error("Elemento canvas não encontrado!");
-                return;
-            }
-
-            if (graficoDistanciaPorData) {
-                graficoDistanciaPorData.destroy();
-            }
-
-            graficoDistanciaPorData = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "Distância (km)",
-                        data: data,
-                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 2,
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            ticks: {
-                                autoSkip: false,
-                                maxRotation: 45,
-                                minRotation: 45
+                        new Chart(graficoCanva, {
+                            type: 'bar',
+                            data: {
+                                labels: listaNomeProva.reverse(),
+                                datasets: [{
+                                    label: 'Pace',
+                                    data: listaPace.reverse(),
+                                    borderWidth: 1
+                                }]
                             },
-                            title: {
-                                display: true,
-                                text: 'Data da Corrida'
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
                             }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Distância (km)'
+                        });
+
+
+                    });
+
+            } else {
+
+                console.log("Houve um erro ao tentar exibir o gráfico");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function carregarGraficoDistanciaPorData() {
+        fetch(`/dashboard/${sessionStorage.ID_USUARIO}`)
+            .then(res => res.ok ? res.json() : Promise.reject("Erro no fetch"))
+            .then(corridas => {
+                console.log("Dados recebidos no frontend:", corridas); // Verifica se os dados chegaram corretamente
+
+                if (!corridas.length) {
+                    console.warn("Nenhuma corrida encontrada.");
+                    return;
+                }
+
+                sessionStorage.setItem("Ultima_corrida", JSON.stringify(corridas));
+
+                var listaData = [];
+                var listaDistancia = [];
+
+                for (let i = 0; i < corridas.length; i++) {
+                    var data = new Date(corridas[i].dtCorrida);
+                    var dataFormatada = data.toLocaleDateString('pt-BR')
+                    listaData.push(dataFormatada)
+                    listaDistancia.push(corridas[i].distancia)
+                }
+
+                var grafico2 = document.getElementById('canva_grafico2').getContext('2d');
+
+                new Chart(grafico2, {
+                    type: 'line',
+                    data: {
+                        labels: listaData.reverse(),
+                        datasets: [{
+                            label: "Distância (km)",
+                            data: listaDistancia.reverse(),
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Distância (km)'
+                                }
                             }
                         }
                     }
-                }
-            });
-        })
-        .catch(erro => console.error("Erro ao carregar corridas:", erro));
-}
+                });
+            })
+            .catch(erro => console.error("Erro ao carregar corridas:", erro));
+    }
 
 
 

@@ -28,7 +28,7 @@ function dados_ultima_corrida(req, res) {
                 if (resultado.length == 1) {
                     res.json({
                         nome: resultado[0].corrida,
-                        dataCorrida: resultado[0].dataCorrida,
+                        dtCorrida: resultado[0].dataCorrida,
                         distancia: resultado[0].distancia,
                         tempo: resultado[0].tempo,
                         qtdCorrida: resultado[0].qtdCorrida,
@@ -78,6 +78,29 @@ function dadosFeedCorrida(req, res) {
     }
 }
 
+function carregarCorridasParaGrafico(req, res) {
+    var id = req.body.idServer;
+
+    if (!id) {
+        return res.status(400).send("ID do usuário está indefinido!");
+    }
+
+    dashboardModel.buscarCorridasDoUsuario(id)
+        .then(resultado => {
+            console.log("Resposta do banco:", resultado); // Verificando se os dados realmente contêm dataCorrida
+
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(404).send("Nenhuma corrida encontrada.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar dados do gráfico:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 function carregarGraficoDistanciaPorData(req, res) {
     var id = req.body.idServer;
 
@@ -85,7 +108,7 @@ function carregarGraficoDistanciaPorData(req, res) {
         return res.status(400).send("ID do usuário está indefinido!");
     }
 
-    dashboardModel.carregarGraficoDistanciaPorData(id)
+    dashboardModel.buscarCorridasDoUsuario(id)
         .then(resultado => {
             console.log("Resposta do banco:", resultado); // Verificando se os dados realmente contêm dataCorrida
 
@@ -107,5 +130,6 @@ module.exports = {
     dados_ultima_corrida,
     listarCorridasUsuario,
     dadosFeedCorrida,
-    carregarGraficoDistanciaPorData
+    carregarGraficoDistanciaPorData,
+    carregarCorridasParaGrafico
 };
