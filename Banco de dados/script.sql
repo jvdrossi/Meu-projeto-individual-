@@ -16,7 +16,7 @@ nome VARCHAR(45),
 dtCorrida DATE,
 distancia DECIMAL (6,2),
 tempo TIME,
-pace TIME,
+pace INT,
 fkUsuario INT,
 CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario)
 REFERENCES usuario(idUsuario)
